@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tileforge.local/contracts/effect-recipe.schema.json",
+  "title": "TileForge Effect Recipe",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "forge",
+    "schemaVersion",
+    "contentVersion",
+    "id",
+    "seed",
+    "class",
+    "tier",
+    "allegiance",
+    "role",
+    "danger",
+    "material",
+    "family",
+    "themePolicy",
+    "frame",
+    "animation",
+    "rotation",
+    "geometry",
+    "render",
+    "worldLayer",
+    "audio"
+  ],
+  "properties": {
+    "forge": { "const": "tileforge-effect-forge" },
+    "schemaVersion": { "const": "0.1.0" },
+    "contentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$" },
+    "seed": { "type": "string", "minLength": 1 },
+    "class": {
+      "enum": ["projectile", "telegraph", "feedback", "zone", "combat-text"]
+    },
+    "tier": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "allegiance": { "enum": ["player", "hostile", "neutral-support"] },
+    "role": { "type": "string", "minLength": 1 },
+    "danger": { "enum": ["ordinary", "elite", "boss"] },
+    "material": {
+      "enum": ["physical", "arcane", "fire", "frost", "corruption", "neutral"]
+    },
+    "family": { "type": "string", "minLength": 1 },
+    "themePolicy": { "enum": ["identity-locked", "accent-optional", "fixed"] },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["w", "h", "pivot", "forward", "padding"],
+      "properties": {
+        "w": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "h": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "pivot": { "$ref": "#/$defs/point" },
+        "forward": { "$ref": "#/$defs/vector" },
+        "padding": { "type": "integer", "minimum": 0, "maximum": 16 }
+      }
+    },
+    "animation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frames", "frameMs", "loop", "phasePolicy"],
+      "properties": {
+        "frames": { "type": "integer", "minimum": 1, "maximum": 32 },
+        "frameMs": { "type": "integer", "minimum": 16, "maximum": 5000 },
+        "loop": { "type": "boolean" },
+        "phasePolicy": { "enum": ["spawn-at-zero", "event-controlled"] }
+      }
+    },
+    "rotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "sampling"],
+      "properties": {
+        "mode": { "enum": ["none", "travel-direction", "impact-normal"] },
+        "sampling": { "const": "nearest" }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["shape"],
+      "properties": {
+        "shape": { "enum": ["point", "circle", "rectangle", "capsule", "wedge"] },
+        "radiusPx": { "type": "integer", "minimum": 0, "maximum": 128 },
+        "widthPx": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "heightPx": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "lengthPx": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "angleDeg": { "type": "integer", "minimum": 1, "maximum": 360 }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["silhouette", "treatment", "alpha", "blend"],
+      "properties": {
+        "silhouette": { "type": "string", "minLength": 1 },
+        "treatment": { "type": "string", "minLength": 1 },
+        "alpha": { "const": "binary" },
+        "blend": { "const": "normal" }
+      }
+    },
+    "worldLayer": {
+      "enum": [
+        "FLOOR",
+        "DECAL",
+        "GROUND_TELEGRAPH",
+        "ACTIVE_HAZARD",
+        "CORPSE_LOOT",
+        "ACTOR",
+        "ACTOR_FEEDBACK",
+        "PLAYER_PROJECTILE",
+        "COMBAT_TEXT",
+        "HOSTILE_PROJECTILE"
+      ]
+    },
+    "audio": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/audioCue" }
+    },
+    "editor": {
+      "type": "object",
+      "description": "Excluded from canonical recipe hashes.",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "point": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "integer" },
+        { "type": "integer" }
+      ],
+      "items": false
+    },
+    "vector": {
+      "type": "array",
+      "prefixItems": [
+        { "type": "integer", "minimum": -1, "maximum": 1 },
+        { "type": "integer", "minimum": -1, "maximum": 1 }
+      ],
+      "items": false
+    },
+    "audioCue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "event", "spatial", "cooldownMs", "stackPolicy"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^sfx\\.[a-z0-9_.-]+$" },
+        "event": { "type": "string", "minLength": 1 },
+        "spatial": { "type": "boolean" },
+        "cooldownMs": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "stackPolicy": {
+          "enum": ["nearest-loudest", "once-per-volley", "coalesce", "one-voice"]
+        }
+      }
+    }
+  }
+}

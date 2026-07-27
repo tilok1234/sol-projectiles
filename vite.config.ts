@@ -1,0 +1,16 @@
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import { viteSingleFile } from "vite-plugin-singlefile";
+
+export default defineConfig({
+  plugins: [react(), viteSingleFile()],
+  build: {
+    target: "es2022",
+    cssCodeSplit: false,
+    assetsInlineLimit: 100_000_000,
+  },
+  test: {
+    environment: "jsdom",
+    include: ["tests/**/*.test.ts"],
+  },
+});

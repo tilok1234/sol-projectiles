@@ -1,0 +1,235 @@
+{
+  "pack": "tileforge-actor-pack",
+  "contentVersion": "2.3.0",
+  "generated": "2026-07-27",
+  "frame": {
+    "w": 32,
+    "h": 32,
+    "pivot": [
+      16,
+      27
+    ]
+  },
+  "rows": [
+    "s",
+    "w",
+    "e",
+    "n"
+  ],
+  "cols": [
+    "idle0",
+    "idle1",
+    "idle2",
+    "idle3",
+    "walk0",
+    "walk1",
+    "walk2",
+    "walk3",
+    "attack0",
+    "attack1",
+    "attack2",
+    "attack3",
+    "hit0",
+    "hit1",
+    "cast0",
+    "cast1",
+    "cast2",
+    "cast3",
+    "death0",
+    "death1",
+    "death2",
+    "death3",
+    "death4"
+  ],
+  "anims": {
+    "idle": {
+      "frames": 4,
+      "ms": 260
+    },
+    "walk": {
+      "frames": 4,
+      "ms": 150
+    },
+    "attack": {
+      "frames": 4,
+      "ms": 110
+    },
+    "hit": {
+      "frames": 2,
+      "ms": 110
+    },
+    "cast": {
+      "frames": 4,
+      "ms": 140
+    },
+    "death": {
+      "frames": 5,
+      "ms": 150
+    }
+  },
+  "themes": [
+    "forest",
+    "autumn",
+    "dusk",
+    "winter"
+  ],
+  "outline": "ink",
+  "actors": [
+    {
+      "name": "adventurer",
+      "preset": "adventurer",
+      "seed": "master-adventurer",
+      "hash": "9d286d8a",
+      "sheets": [
+        "sheets/adventurer-forest.png",
+        "sheets/adventurer-autumn.png",
+        "sheets/adventurer-dusk.png",
+        "sheets/adventurer-winter.png"
+      ],
+      "recipe": "recipes/adventurer.json"
+    },
+    {
+      "name": "guard",
+      "preset": "guard",
+      "seed": "master-guard",
+      "hash": "c8cfd3f3",
+      "sheets": [
+        "sheets/guard-forest.png",
+        "sheets/guard-autumn.png",
+        "sheets/guard-dusk.png",
+        "sheets/guard-winter.png"
+      ],
+      "recipe": "recipes/guard.json"
+    },
+    {
+      "name": "fisher",
+      "preset": "fisher",
+      "seed": "master-fisher",
+      "hash": "d3edbd4b",
+      "sheets": [
+        "sheets/fisher-forest.png",
+        "sheets/fisher-autumn.png",
+        "sheets/fisher-dusk.png",
+        "sheets/fisher-winter.png"
+      ],
+      "recipe": "recipes/fisher.json"
+    },
+    {
+      "name": "miner",
+      "preset": "miner",
+      "seed": "master-miner",
+      "hash": "328c4bc1",
+      "sheets": [
+        "sheets/miner-forest.png",
+        "sheets/miner-autumn.png",
+        "sheets/miner-dusk.png",
+        "sheets/miner-winter.png"
+      ],
+      "recipe": "recipes/miner.json"
+    },
+    {
+      "name": "cultist",
+      "preset": "cultist",
+      "seed": "master-cultist",
+      "hash": "601115d2",
+      "sheets": [
+        "sheets/cultist-forest.png",
+        "sheets/cultist-autumn.png",
+        "sheets/cultist-dusk.png",
+        "sheets/cultist-winter.png"
+      ],
+      "recipe": "recipes/cultist.json"
+    },
+    {
+      "name": "bandit",
+      "preset": "bandit",
+      "seed": "master-bandit",
+      "hash": "125dc9d1",
+      "sheets": [
+        "sheets/bandit-forest.png",
+        "sheets/bandit-autumn.png",
+        "sheets/bandit-dusk.png",
+        "sheets/bandit-winter.png"
+      ],
+      "recipe": "recipes/bandit.json"
+    },
+    {
+      "name": "traveler",
+      "preset": "traveler",
+      "seed": "pack-traveler",
+      "hash": "3ae6b5d1",
+      "sheets": [
+        "sheets/traveler-forest.png",
+        "sheets/traveler-autumn.png",
+        "sheets/traveler-dusk.png",
+        "sheets/traveler-winter.png"
+      ],
+      "recipe": "recipes/traveler.json"
+    },
+    {
+      "name": "caster",
+      "preset": "caster",
+      "seed": "pack-caster",
+      "hash": "5f92a937",
+      "sheets": [
+        "sheets/caster-forest.png",
+        "sheets/caster-autumn.png",
+        "sheets/caster-dusk.png",
+        "sheets/caster-winter.png"
+      ],
+      "recipe": "recipes/caster.json"
+    },
+    {
+      "name": "zombie",
+      "preset": "undead",
+      "seed": "pack-zombie",
+      "hash": "1893b576",
+      "sheets": [
+        "sheets/zombie-forest.png",
+        "sheets/zombie-autumn.png",
+        "sheets/zombie-dusk.png",
+        "sheets/zombie-winter.png"
+      ],
+      "recipe": "recipes/zombie.json"
+    },
+    {
+      "name": "skeleton",
+      "preset": "undead",
+      "seed": "pack-skeleton",
+      "hash": "45793f01",
+      "sheets": [
+        "sheets/skeleton-forest.png",
+        "sheets/skeleton-autumn.png",
+        "sheets/skeleton-dusk.png",
+        "sheets/skeleton-winter.png"
+      ],
+      "recipe": "recipes/skeleton.json"
+    },
+    {
+      "name": "wolf-grey",
+      "preset": "beast",
+      "seed": "pack-wolf",
+      "hash": "fde6a040",
+      "sheets": [
+        "sheets/wolf-grey-forest.png",
+        "sheets/wolf-grey-autumn.png",
+        "sheets/wolf-grey-dusk.png",
+        "sheets/wolf-grey-winter.png"
+      ],
+      "recipe": "recipes/wolf-grey.json"
+    },
+    {
+      "name": "wolf-black",
+      "preset": "beast",
+      "seed": "pack-wolf-black",
+      "hash": "8c940d52",
+      "sheets": [
+        "sheets/wolf-black-forest.png",
+        "sheets/wolf-black-autumn.png",
+        "sheets/wolf-black-dusk.png",
+        "sheets/wolf-black-winter.png"
+      ],
+      "recipe": "recipes/wolf-black.json"
+    }
+  ]
+}

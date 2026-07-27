@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tileforge.local/contracts/effect-pack.schema.json",
+  "title": "TileForge Effect Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "forge",
+    "forgeVersion",
+    "schemaVersion",
+    "contentVersion",
+    "pixelsPerTile",
+    "effectIds",
+    "recipeHashes",
+    "actorBindings",
+    "audioRoster"
+  ],
+  "properties": {
+    "forge": { "const": "tileforge-effect-forge" },
+    "forgeVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "schemaVersion": { "const": "0.1.0" },
+    "contentVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "pixelsPerTile": { "type": "integer", "minimum": 1, "maximum": 256 },
+    "effectIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "recipeHashes": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+    },
+    "actorBindings": { "$ref": "actor-combat-bindings.schema.json" },
+    "audioRoster": { "$ref": "audio-roster.schema.json" }
+  }
+}

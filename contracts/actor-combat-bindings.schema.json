@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tileforge.local/contracts/actor-combat-bindings.schema.json",
+  "title": "Actor Combat Bindings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["actorPackHash", "actors"],
+  "properties": {
+    "actorPackHash": { "type": "string", "minLength": 1 },
+    "actors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["events", "frames"],
+            "properties": {
+              "events": {
+                "type": "object",
+                "additionalProperties": { "type": "integer", "minimum": 0 }
+              },
+              "frames": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "prefixItems": [
+                      { "type": "integer" },
+                      { "type": "integer" }
+                    ],
+                    "items": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

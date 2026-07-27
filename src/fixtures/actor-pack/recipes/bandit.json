@@ -1,0 +1,117 @@
+{
+  "forge": "tileforge-actor-forge",
+  "contentVersion": "2.3.0",
+  "recipe": {
+    "v": "2.3.0",
+    "seed": "master-bandit",
+    "preset": "bandit",
+    "theme": "forest",
+    "slots": {
+      "body": {
+        "part": "body.standard",
+        "dye": "skin_tan"
+      },
+      "face": {
+        "part": "face.beard"
+      },
+      "hair": {
+        "part": "hair.crop",
+        "dye": "hair_black"
+      },
+      "legs": {
+        "part": "legs.trousers",
+        "dye": "wool_olive"
+      },
+      "boots": {
+        "part": "boots.shoes"
+      },
+      "torso": {
+        "part": "torso.shirt",
+        "dye": "wool_charcoal"
+      },
+      "headgear": {
+        "part": "head.hood",
+        "dye": "wool_grey"
+      },
+      "shield": {
+        "part": "shield.none"
+      },
+      "weapon": {
+        "part": "weapon.axe"
+      },
+      "back": {
+        "part": "back.none"
+      },
+      "overlay": {
+        "part": "overlay.none"
+      }
+    },
+    "faction": null,
+    "hash": "125dc9d1"
+  },
+  "frame": {
+    "w": 32,
+    "h": 32,
+    "pivot": [
+      16,
+      27
+    ]
+  },
+  "rows": [
+    "s",
+    "w",
+    "e",
+    "n"
+  ],
+  "cols": [
+    "idle0",
+    "idle1",
+    "idle2",
+    "idle3",
+    "walk0",
+    "walk1",
+    "walk2",
+    "walk3",
+    "attack0",
+    "attack1",
+    "attack2",
+    "attack3",
+    "hit0",
+    "hit1",
+    "cast0",
+    "cast1",
+    "cast2",
+    "cast3",
+    "death0",
+    "death1",
+    "death2",
+    "death3",
+    "death4"
+  ],
+  "anims": {
+    "idle": {
+      "frames": 4,
+      "ms": 260
+    },
+    "walk": {
+      "frames": 4,
+      "ms": 150
+    },
+    "attack": {
+      "frames": 4,
+      "ms": 110
+    },
+    "hit": {
+      "frames": 2,
+      "ms": 110
+    },
+    "cast": {
+      "frames": 4,
+      "ms": 140
+    },
+    "death": {
+      "frames": 5,
+      "ms": 150
+    }
+  }
+}
