@@ -5,7 +5,9 @@ tool. It connects three surfaces:
 
 - **Effect Author** for effect contracts, frames, and semantic channels;
 - **Combat Lab** for fixed-density readability and hitbox-truth inspection;
-- **Pack Review** for gate status, validation, and deterministic export.
+- **Pack Review** for gate status, validation, and deterministic export;
+- **Visual Grammar** for the approved hostile-ramp comparison; and
+- **Socket Review** for exact six-actor frame and anchor proposals.
 
 The current `0.1.0` build is an **EF-0 contract candidate with the complete
 Tier 1 recipe roster**. It intentionally does not claim the EF-1 visual gate
@@ -32,10 +34,10 @@ styles, recipes, and fixtures in one file.
 
 The app renders all 17 Tier 1 recipes, including all seven player and hostile
 projectile silhouettes, both ground-telegraph classes, and the complete feedback
-set. It includes five synthetic stress backgrounds,
-greyscale, hitbox-truth and layer-order modes, deterministic frame scrubbing,
-actor socket editing, recipe JSON inspection, PNG evidence capture, canonical
-pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
+set. It includes five real reference-map stress backgrounds, greyscale,
+hitbox-truth and layer-order modes, deterministic frame scrubbing, an editable
+six-actor socket/release board, recipe JSON inspection, PNG evidence capture,
+canonical pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
 
 The repository embeds the supplied Sprite Forge full pack: 231 manifest-backed
 actors plus props, projectiles, and effects. Combat Lab exposes six representative
@@ -61,3 +63,5 @@ stand-ins. See [docs/FIXTURE_IMPORT.md](docs/FIXTURE_IMPORT.md).
 See [docs/ROADMAP.md](docs/ROADMAP.md) for scope and gate status.
 The active palette review is documented in
 [docs/VISUAL_GRAMMAR_REVIEW.md](docs/VISUAL_GRAMMAR_REVIEW.md).
+The open binding gate is documented in
+[docs/SOCKET_RELEASE_REVIEW.md](docs/SOCKET_RELEASE_REVIEW.md).

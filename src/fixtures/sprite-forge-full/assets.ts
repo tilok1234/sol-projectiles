@@ -16,6 +16,9 @@ export type SpriteForgeActorId =
 export type SpriteForgeActorSet = "skirmish" | "arcane";
 export type SpriteForgeSheetSet = Record<SpriteForgeActorId, HTMLImageElement>;
 
+export const SPRITE_FORGE_MANIFEST_SHA256 =
+  "1D93D0F3D96A7C92D284891F39B90D602AE721C84742B78EBE3F598587EE1549";
+
 export const SPRITE_FORGE_CORPUS = {
   generated: "2026-07-27",
   actors: 231,

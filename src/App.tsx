@@ -3,8 +3,9 @@ import { CombatLab } from "./ui/CombatLab";
 import { EffectAuthor } from "./ui/EffectAuthor";
 import { GrammarBoard } from "./ui/GrammarBoard";
 import { PackReview } from "./ui/PackReview";
+import { SocketReview } from "./ui/SocketReview";
 
-type AppView = "author" | "lab" | "pack" | "grammar";
+type AppView = "author" | "lab" | "pack" | "grammar" | "sockets";
 
 export default function App() {
   const [view, setView] = useState<AppView>("author");
@@ -35,6 +36,9 @@ export default function App() {
           <button className={view === "grammar" ? "active" : ""} onClick={() => setView("grammar")}>
             <span>04</span> Visual Grammar
           </button>
+          <button className={view === "sockets" ? "active" : ""} onClick={() => setView("sockets")}>
+            <span>05</span> Socket Review
+          </button>
         </nav>
         <div className="header-status">
           <span className="pulse" />
@@ -60,6 +64,7 @@ export default function App() {
         {view === "lab" && <CombatLab />}
         {view === "pack" && <PackReview />}
         {view === "grammar" && <GrammarBoard />}
+        {view === "sockets" && <SocketReview />}
       </div>
 
       <footer className="app-footer">

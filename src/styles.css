@@ -66,7 +66,7 @@ pre {
 
 .app-header {
   display: grid;
-  grid-template-columns: 260px 1fr 310px;
+  grid-template-columns: 220px 1fr 240px;
   align-items: center;
   padding: 0 26px;
   border-bottom: 1px solid var(--line);
@@ -132,7 +132,7 @@ pre {
 
 .main-tabs button {
   position: relative;
-  min-width: 138px;
+  min-width: 112px;
   border: 0;
   background: transparent;
   color: var(--muted);
@@ -1630,6 +1630,418 @@ input[type="range"] {
   color: var(--cyan);
 }
 
+.socket-review-layout {
+  min-height: 670px;
+  height: calc(100vh - 174px);
+  display: grid;
+  grid-template-columns: 250px minmax(500px, 1fr) 280px;
+  gap: 14px;
+}
+
+.socket-actor-panel,
+.socket-decision-panel,
+.socket-stage {
+  min-height: 0;
+}
+
+.socket-actor-panel,
+.socket-decision-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.socket-actor-list {
+  padding: 8px;
+}
+
+.socket-actor-list button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 8px;
+  padding: 11px 9px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  text-align: left;
+}
+
+.socket-actor-list button + button {
+  margin-top: 3px;
+}
+
+.socket-actor-list button:hover {
+  border-color: #2b3844;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.socket-actor-list button.active {
+  border-color: #3d6565;
+  background:
+    linear-gradient(90deg, rgba(36, 87, 83, 0.31), rgba(22, 31, 39, 0.2));
+  color: var(--text);
+}
+
+.socket-list-index {
+  padding-top: 2px;
+  color: var(--teal);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 8px;
+}
+
+.socket-actor-list button > span:nth-child(2) {
+  min-width: 0;
+  display: grid;
+}
+
+.socket-actor-list strong {
+  font-size: 10px;
+}
+
+.socket-actor-list small {
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.socket-actor-list i {
+  grid-column: 2;
+  width: max-content;
+  padding: 2px 5px;
+  border: 1px solid #5b4f31;
+  border-radius: 8px;
+  color: var(--amber);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 6px;
+  font-style: normal;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.socket-scope-note {
+  margin: auto 12px 12px;
+  padding: 11px;
+  border: 1px solid #2b3540;
+  border-radius: 5px;
+  background: rgba(9, 13, 18, 0.46);
+}
+
+.socket-scope-note strong {
+  color: #bfc8ce;
+  font-size: 9px;
+}
+
+.socket-scope-note p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.socket-stage {
+  display: grid;
+  grid-template-rows: auto minmax(220px, 1fr) auto auto auto;
+}
+
+.socket-stage-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 15px;
+  border-bottom: 1px solid var(--line);
+}
+
+.socket-stage-heading h1 {
+  margin: 4px 0 0;
+  font-size: 21px;
+  letter-spacing: -0.03em;
+}
+
+.socket-stage-heading > div > p:last-child {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 8px;
+}
+
+.candidate-pill {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid #5b4f31;
+  border-radius: 10px;
+  background: rgba(90, 70, 30, 0.2);
+  color: var(--amber);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.socket-canvas-wrap {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background:
+    radial-gradient(circle at center, rgba(68, 106, 105, 0.13), transparent 54%),
+    #0c1016;
+}
+
+.socket-sequence-canvas {
+  display: block;
+  width: min(100%, 675px);
+  height: auto;
+  border: 1px solid #303c47;
+  border-radius: 6px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.28);
+  cursor: crosshair;
+  image-rendering: pixelated;
+}
+
+.socket-load-error {
+  color: var(--red);
+  font-size: 9px;
+}
+
+.socket-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 9px 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #10151c;
+}
+
+.socket-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.socket-legend i {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+}
+
+.legend-primary {
+  border: 2px solid var(--cyan);
+  border-radius: 50%;
+}
+
+.legend-hurt {
+  border: 2px solid var(--amber);
+}
+
+.legend-ground {
+  height: 2px !important;
+  background: var(--teal);
+}
+
+.legend-release {
+  border: 2px solid var(--amber);
+  border-radius: 2px;
+}
+
+.socket-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 108px 108px;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.socket-controls label,
+.frame-control {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.socket-controls label > span,
+.frame-control > span {
+  color: var(--muted);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.frame-control > div {
+  display: flex;
+  gap: 4px;
+}
+
+.frame-control button {
+  min-width: 38px;
+  height: 30px;
+  border: 1px solid #34414d;
+  border-radius: 4px;
+  background: #111820;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 8px;
+}
+
+.frame-control button.active {
+  border-color: var(--teal);
+  background: rgba(34, 88, 84, 0.34);
+  color: var(--teal);
+}
+
+.frame-control button.release.active {
+  border-color: var(--amber);
+  background: rgba(104, 79, 30, 0.32);
+  color: var(--amber);
+}
+
+.socket-controls input {
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  border: 1px solid #34414d;
+  border-radius: 4px;
+  background: #0d1218;
+  color: var(--text);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 9px;
+}
+
+.socket-readout {
+  display: grid;
+  grid-template-columns: 90px 1fr 1fr 1.4fr;
+  gap: 1px;
+  background: var(--line);
+}
+
+.socket-readout > div {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  background: #10151c;
+}
+
+.socket-readout span {
+  color: var(--muted-2);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.socket-readout strong {
+  color: var(--teal);
+  font-size: 11px;
+}
+
+.socket-readout code {
+  overflow: hidden;
+  color: #c0cad0;
+  font-size: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.decision-state {
+  margin: 14px;
+  padding: 14px;
+  border: 1px solid #5b4f31;
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(102, 79, 31, 0.23), rgba(27, 23, 17, 0.28));
+}
+
+.decision-state > span {
+  color: var(--amber);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.decision-state strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+.decision-state p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.socket-checklist {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 15px;
+  list-style: none;
+}
+
+.socket-checklist li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 8px;
+  color: #aab5bc;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.socket-checklist span {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #3b4854;
+  border-radius: 50%;
+  color: var(--teal);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 7px;
+}
+
+.coordinate-contract {
+  display: grid;
+  gap: 5px;
+  margin: 16px 14px;
+  padding: 11px;
+  border: 1px solid #2d3944;
+  border-radius: 5px;
+  background: #0d1218;
+}
+
+.coordinate-contract strong {
+  margin-bottom: 3px;
+  color: #bdc7cd;
+  font-size: 9px;
+}
+
+.coordinate-contract code {
+  color: var(--muted);
+  font-size: 7px;
+}
+
+.socket-decision-panel > .primary-button,
+.socket-decision-panel > .secondary-button {
+  width: auto;
+  margin: 0 14px 8px;
+}
+
 @media (max-width: 1250px) {
   .author-grid {
     grid-template-columns: 225px minmax(500px, 1fr) 300px;
@@ -1650,6 +2062,14 @@ input[type="range"] {
 
   .preview-choice {
     grid-column: 1 / -1;
+  }
+
+  .socket-review-layout {
+    grid-template-columns: 225px minmax(490px, 1fr) 250px;
+  }
+
+  .socket-controls {
+    grid-template-columns: 1fr 1fr 90px 90px;
   }
 }
 
