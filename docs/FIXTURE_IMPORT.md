@@ -28,6 +28,29 @@ Combat Lab currently exposes six representative sheets:
 The complete pack remains read-only fixture evidence. Effect Forge does not
 rewrite or regenerate the supplied sheets.
 
+### Browser ZIP importer
+
+Combat Lab can now load a Sprite Forge pack directly with **Import Sprite Forge
+ZIP**. Import remains local to the browser and never rewrites the selected
+archive.
+
+The importer:
+
+- accepts one `manifest.json`, either at ZIP root or below one pack folder;
+- rejects absolute paths, parent traversal, duplicate normalized paths,
+  ambiguous manifests, oversized archives, and malformed JSON;
+- requires the six representative actors used by the current binding preview;
+- checks their logical cell, export scale, animation row contract, PNG header,
+  and exact sheet dimensions before decoding any sheet;
+- hashes the exact manifest bytes and labels the supplied corpus as verified
+  when it matches the pinned manifest SHA-256; and
+- disables candidate binding truth for a structurally compatible custom pack
+  whose manifest hash differs, because socket approval cannot transfer across
+  pack identities.
+
+**Use embedded pack** restores the checked-in fixture immediately. Imported
+images live in memory only and are discarded on reset or page reload.
+
 ## TileForge
 
 Imported the purpose-built `tileforge-reference-pack/reference` corpus into

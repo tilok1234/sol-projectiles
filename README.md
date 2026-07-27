@@ -38,8 +38,9 @@ projectile silhouettes, both ground-telegraph classes, and the complete feedback
 set. It includes five real reference-map stress backgrounds, greyscale,
 hitbox-truth and layer-order modes, deterministic frame scrubbing, an editable
 six-actor socket/release board, a binding-driven prefire/release runtime preview,
-recipe JSON inspection, one-click socket evidence PNG and validation JSON,
-canonical pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
+recipe JSON inspection, a validated in-browser Sprite Forge ZIP importer,
+one-click socket evidence PNG and validation JSON, canonical pack export/re-import,
+and an A/B/C hostile-ramp Visual Grammar board.
 
 The repository embeds the supplied Sprite Forge full pack: 231 manifest-backed
 actors plus props, projectiles, and effects. Combat Lab exposes six representative

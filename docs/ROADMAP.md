@@ -25,7 +25,7 @@ Target: Gate EF-0 candidate plus the internal vertical slice.
 - [x] Candidate bindings drive Combat Lab prefire/release runtime preview
 - [x] Deterministic six-actor evidence PNG and validation JSON export
 - [x] Real TileForge RD7 reference-map fixture import
-- [ ] User-facing Sprite Forge ZIP importer
+- [x] User-facing Sprite Forge ZIP importer
 - [x] Final hostile ramp approval: B — Vermilion Flare
 - [ ] Exact actor socket/release binding approval
 - [ ] EF-0 explicit approval

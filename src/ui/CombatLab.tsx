@@ -21,12 +21,18 @@ import {
   resolveBindingPreview,
   timeForBindingFrame,
 } from "../lab/bindingPreview";
+import {
+  loadImportedSpriteForgeSheets,
+  parseSpriteForgeZip,
+  type ImportedSpriteForgePack,
+} from "../importer/spriteForgeZip";
 import { renderLabScene } from "../lab/scene";
 import type { BackgroundId } from "../model/types";
 import { downloadCanvas } from "../renderer/canvas";
 
 export function CombatLab() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const zipInputRef = useRef<HTMLInputElement>(null);
   const [background, setBackground] = useState<BackgroundId>("dungeon");
   const [grayscale, setGrayscale] = useState(false);
   const [hitboxTruth, setHitboxTruth] = useState(false);
@@ -39,11 +45,20 @@ export function CombatLab() {
   const [bindingTruth, setBindingTruth] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [actorSheets, setActorSheets] = useState<ActorSheetSet | null>(null);
+  const [embeddedSpriteForgeSheets, setEmbeddedSpriteForgeSheets] =
+    useState<SpriteForgeSheetSet | null>(null);
   const [spriteForgeSheets, setSpriteForgeSheets] =
     useState<SpriteForgeSheetSet | null>(null);
+  const [importedPack, setImportedPack] =
+    useState<ImportedSpriteForgePack | null>(null);
+  const [zipImportState, setZipImportState] = useState<
+    { state: "idle" | "reading" | "error"; message?: string }
+  >({ state: "idle" });
   const [tileForgeReferences, setTileForgeReferences] =
     useState<TileForgeReferenceImages | null>(null);
   const bindingPreview = resolveBindingPreview(bindingActorId, time);
+  const bindingPackCompatible =
+    importedPack === null || importedPack.matchesEmbeddedManifest;
 
   useEffect(() => {
     let active = true;
@@ -62,7 +77,8 @@ export function CombatLab() {
       loadTileForgeReferences(),
     ]).then(([sheets, references]) => {
       if (!active) return;
-      setSpriteForgeSheets(sheets);
+      setEmbeddedSpriteForgeSheets(sheets);
+      setSpriteForgeSheets((current) => current ?? sheets);
       setTileForgeReferences(references);
     });
     return () => {
@@ -82,7 +98,7 @@ export function CombatLab() {
       time,
       actorSet,
       bindingActorId,
-      bindingTruth,
+      bindingTruth: bindingTruth && bindingPackCompatible,
       actorSheets: actorSheets ?? undefined,
       spriteForgeSheets: spriteForgeSheets ?? undefined,
       tileForgeReferences: tileForgeReferences ?? undefined,
@@ -92,6 +108,7 @@ export function CombatLab() {
     actorSheets,
     background,
     bindingActorId,
+    bindingPackCompatible,
     bindingTruth,
     density,
     grayscale,
@@ -110,13 +127,43 @@ export function CombatLab() {
     return () => window.clearInterval(timer);
   }, [playing]);
 
+  const importSpriteForgeZip = async (file: File) => {
+    setZipImportState({ state: "reading" });
+    try {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      const pack = await parseSpriteForgeZip(bytes, file.name);
+      const sheets = await loadImportedSpriteForgeSheets(pack);
+      setImportedPack(pack);
+      setSpriteForgeSheets(sheets);
+      setZipImportState({ state: "idle" });
+      if (!pack.matchesEmbeddedManifest) setBindingTruth(false);
+    } catch (error) {
+      setZipImportState({
+        state: "error",
+        message: error instanceof Error ? error.message : "Could not import ZIP.",
+      });
+    } finally {
+      if (zipInputRef.current) zipInputRef.current.value = "";
+    }
+  };
+
+  const restoreEmbeddedPack = () => {
+    if (embeddedSpriteForgeSheets) {
+      setSpriteForgeSheets(embeddedSpriteForgeSheets);
+    }
+    setImportedPack(null);
+    setZipImportState({ state: "idle" });
+    setBindingTruth(true);
+  };
+
   return (
     <section className="lab-layout" aria-label="Combat Lab">
       <div className="panel lab-main">
         <div className="panel-heading lab-heading">
           <div>
             <p className="eyebrow">
-              Sprite Forge full pack · TileForge reference corpus
+              {importedPack ? "Imported Sprite Forge ZIP" : "Sprite Forge full pack"} ·
+              TileForge reference corpus
             </p>
             <h2>Combat Lab</h2>
           </div>
@@ -248,7 +295,11 @@ export function CombatLab() {
         <div className="control-group">
           <div className="label-row">
             <label>Sprite Forge actor cast</label>
-            <span>{spriteForgeSheets ? `${SPRITE_FORGE_CORPUS.actors} actors` : "loading"}</span>
+            <span>
+              {spriteForgeSheets
+                ? `${importedPack?.actorCount ?? SPRITE_FORGE_CORPUS.actors} actors`
+                : "loading"}
+            </span>
           </div>
           <div className="segmented">
             {(["skirmish", "arcane"] as const).map((value) => (
@@ -262,14 +313,68 @@ export function CombatLab() {
             ))}
           </div>
           <small>
-            Six manifest-backed representatives are live from the supplied pack.
+            Six manifest-backed representatives are live from the{" "}
+            {importedPack ? "imported ZIP" : "supplied pack"}.
           </small>
+          <div className="zip-importer">
+            <input
+              ref={zipInputRef}
+              aria-label="Sprite Forge ZIP file"
+              className="visually-hidden"
+              type="file"
+              accept=".zip,application/zip"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file) void importSpriteForgeZip(file);
+              }}
+            />
+            <div className="zip-import-actions">
+              <button
+                className="secondary-button"
+                disabled={zipImportState.state === "reading"}
+                onClick={() => zipInputRef.current?.click()}
+              >
+                {zipImportState.state === "reading"
+                  ? "Checking ZIP…"
+                  : "Import Sprite Forge ZIP"}
+              </button>
+              {importedPack && (
+                <button className="secondary-button" onClick={restoreEmbeddedPack}>
+                  Use embedded pack
+                </button>
+              )}
+            </div>
+            {importedPack && (
+              <div
+                className={`zip-import-result ${
+                  importedPack.matchesEmbeddedManifest ? "verified" : "custom"
+                }`}
+              >
+                <strong>
+                  {importedPack.matchesEmbeddedManifest
+                    ? "Verified supplied corpus"
+                    : "Compatible custom corpus"}
+                </strong>
+                <span>{importedPack.fileName}</span>
+                <code>{importedPack.manifestSha256.slice(0, 16)}</code>
+                <small>
+                  {importedPack.entryCount} entries · {importedPack.theme} · ×
+                  {importedPack.scale}
+                </small>
+              </div>
+            )}
+            {zipImportState.state === "error" && (
+              <p className="zip-import-error" role="alert">
+                {zipImportState.message}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="control-group binding-preview-editor">
           <div className="label-row">
             <label htmlFor="binding-actor">Candidate binding preview</label>
-            <span>approval open</span>
+            <span>{bindingPackCompatible ? "approval open" : "hash mismatch"}</span>
           </div>
           <select
             id="binding-actor"
@@ -337,8 +442,9 @@ export function CombatLab() {
             <div><dt>release effect</dt><dd>{bindingPreview.effectId}</dd></div>
           </dl>
           <small>
-            Read directly from the exported candidate companion binding. No
-            approval is recorded here.
+            {bindingPackCompatible
+              ? "Read directly from the exported candidate companion binding. No approval is recorded here."
+              : "Candidate binding truth is disabled because this ZIP has a different manifest hash."}
           </small>
         </div>
 
