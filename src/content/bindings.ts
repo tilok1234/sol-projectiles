@@ -1,6 +1,6 @@
 import type { ActorCombatBindings } from "../model/types";
 
-export const PROXY_ACTOR_BINDINGS: ActorCombatBindings = {
+export const ACTOR_COMBAT_BINDINGS: ActorCombatBindings = {
   actorPackHash: "858bcf931356e35c1c04f52a2445720ca5589c624851ebb6cbe5ec5e3c859808",
   actors: {
     bandit: {

@@ -1,4 +1,4 @@
-import { PROXY_ACTOR_BINDINGS } from "../content/bindings";
+import { ACTOR_COMBAT_BINDINGS } from "../content/bindings";
 import { RECIPE_BY_ID } from "../content/recipes";
 import type {
   ActorSheetSet,
@@ -278,5 +278,5 @@ export const renderLabScene = (
   canvas.dataset.renderSignature = (signature >>> 0).toString(16).padStart(8, "0");
   canvas.dataset.opaquePixels = String(opaquePixels);
 
-  void PROXY_ACTOR_BINDINGS;
+  void ACTOR_COMBAT_BINDINGS;
 };

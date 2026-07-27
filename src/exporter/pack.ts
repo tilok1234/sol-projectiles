@@ -1,5 +1,5 @@
 import { AUDIO_ROSTER } from "../content/audio";
-import { PROXY_ACTOR_BINDINGS } from "../content/bindings";
+import { ACTOR_COMBAT_BINDINGS } from "../content/bindings";
 import { INTERNAL_SLICE_RECIPES } from "../content/recipes";
 import type { EffectPack, EffectRecipe } from "../model/types";
 import { canonicalJson, sha256Hex } from "./canonical";
@@ -24,7 +24,7 @@ export const compilePortablePack = async (
       pixelsPerTile: 16,
       effectIds: sortedRecipes.map((entry) => entry.id),
       recipeHashes,
-      actorBindings: PROXY_ACTOR_BINDINGS,
+      actorBindings: ACTOR_COMBAT_BINDINGS,
       audioRoster: AUDIO_ROSTER,
     },
     recipes: sortedRecipes,

@@ -136,8 +136,8 @@ export function PackReview() {
         <div className="approval-warning">
           <strong>Approval still required</strong>
           <p>
-            Candidate hostile ramp, exact actor sockets, real Actor Forge pack,
-            and real map corpus.
+            Candidate hostile ramp, exact actor sockets, remaining Actor Forge
+            archetypes, and real map corpus.
           </p>
         </div>
       </aside>
