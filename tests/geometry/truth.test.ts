@@ -26,6 +26,21 @@ describe("telegraph and collision truth", () => {
     ).toBe(true);
   });
 
+  it.each([
+    "telegraph.chaser-lunge",
+    "telegraph.elite-cast",
+  ])("uses recipe geometry as the visible footprint for %s", (id) => {
+    const recipe = RECIPE_BY_ID.get(id)!;
+    const collision = geometryMaskFromRecipe(recipe);
+    const rendered = renderEffect(recipe, { frame: 2, progress: 0.75 });
+    expect(
+      masksEqual(
+        collision,
+        frameGeometry(rendered.width, rendered.height, rendered.geometryMask),
+      ),
+    ).toBe(true);
+  });
+
   it("preserves exact area but changes category at activation", () => {
     const telegraph = RECIPE_BY_ID.get("telegraph.delayed-ground")!;
     const hazard = RECIPE_BY_ID.get("zone.active-ground-hazard")!;

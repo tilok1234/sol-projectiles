@@ -224,6 +224,60 @@ export const chevronMask = (
   return mask;
 };
 
+export const crownPopMask = (
+  width: number,
+  height: number,
+  frame: number,
+): Mask => {
+  const mask = createMask(width, height);
+  const cx = Math.floor(width / 2);
+  const lift = Math.min(frame, 3);
+  const baseY = Math.floor(height / 2) + 3 - lift;
+
+  for (let x = cx - 4; x <= cx + 4; x += 1) {
+    if (frame < 4 || Math.abs(x - cx) <= 2) setPixel(mask, x, baseY);
+  }
+  const peaks: Array<[number, number]> = [
+    [-4, -3],
+    [-2, -1],
+    [0, -4],
+    [2, -1],
+    [4, -3],
+  ];
+  for (const [dx, dy] of peaks) {
+    setPixel(mask, cx + dx, baseY + dy);
+    if (frame < 3) setPixel(mask, cx + dx, baseY + dy + 1);
+  }
+  if (frame < 2) {
+    setPixel(mask, cx - 3, baseY - 1);
+    setPixel(mask, cx - 1, baseY - 1);
+    setPixel(mask, cx + 1, baseY - 1);
+    setPixel(mask, cx + 3, baseY - 1);
+  }
+  return mask;
+};
+
+export const hurtWedgeMask = (
+  width: number,
+  height: number,
+  frame: number,
+): Mask => {
+  const mask = createMask(width, height);
+  const cx = Math.floor(width / 2) - 2;
+  const cy = Math.floor(height / 2);
+  const reach = frame === 1 ? 6 : frame === 2 ? 4 : 5;
+
+  setPixel(mask, cx, cy);
+  setPixel(mask, cx + 1, cy);
+  for (let step = 1; step <= reach; step += 1) {
+    const spread = Math.max(1, Math.floor((step + 1) / 2));
+    setPixel(mask, cx + step, cy - spread);
+    setPixel(mask, cx + step, cy + spread);
+    if (step < 3) setPixel(mask, cx + step, cy);
+  }
+  return mask;
+};
+
 const DIGITS: Record<string, string[]> = {
   "0": ["111", "101", "101", "101", "111"],
   "1": ["010", "110", "010", "010", "111"],

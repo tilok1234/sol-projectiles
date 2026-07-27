@@ -3,8 +3,10 @@ import type { EffectRecipe, PixelFrame } from "../model/types";
 import {
   burstMask,
   chevronMask,
+  crownPopMask,
   geometryMaskFromRecipe,
   glintMask,
+  hurtWedgeMask,
   needleMask,
   numberMask,
   orbMask,
@@ -72,9 +74,14 @@ const makeTelegraph = (
   const inner = erode(geometry, 1);
   const boundary = subtract(geometry, inner);
   const step = Math.max(1, Math.min(4, Math.ceil(progress * 4)));
+  const elite = recipe.render.silhouette === "ground.elite-circle";
   channels.silhouette = geometry;
   channels.ink = boundary;
-  channels.body = hatch(inner, step as 1 | 2 | 3 | 4, frame);
+  channels.body = hatch(inner, elite ? 2 : (step as 1 | 2 | 3 | 4), frame);
+  if (elite) {
+    const inwardContour = subtract(inner, erode(inner, 2));
+    channels.body = union(channels.body, inwardContour);
+  }
   channels.core = step === 4 ? erode(inner, 2) : createMask(recipe.frame.w, recipe.frame.h);
   channels.geometry = geometry;
   return channels;
@@ -105,7 +112,7 @@ const buildChannels = (
   progress: number,
   reducedNumber: boolean,
 ): Channels => {
-  if (recipe.class === "telegraph" && recipe.render.silhouette === "ground.circle") {
+  if (recipe.class === "telegraph" && recipe.render.silhouette !== "socket.glint") {
     return makeTelegraph(recipe, frame, progress);
   }
   if (recipe.class === "zone") return makeHazard(recipe, frame);
@@ -143,6 +150,12 @@ const buildChannels = (
     case "impact.chevron":
       base = chevronMask(recipe.frame.w, recipe.frame.h, frame);
       break;
+    case "impact.crown-pop":
+      base = crownPopMask(recipe.frame.w, recipe.frame.h, frame);
+      break;
+    case "impact.hurt-wedge":
+      base = hurtWedgeMask(recipe.frame.w, recipe.frame.h, frame);
+      break;
     case "glyph.damage":
       base = numberMask(recipe.frame.w, recipe.frame.h, "12", reducedNumber);
       break;
@@ -173,6 +186,14 @@ const buildChannels = (
     channels.core = insetCore(base);
   }
   if (recipe.render.silhouette === "impact.chevron") {
+    channels.core = createMask(recipe.frame.w, recipe.frame.h);
+  }
+  if (recipe.render.silhouette === "impact.crown-pop") {
+    channels.core = createMask(recipe.frame.w, recipe.frame.h);
+    const cx = Math.floor(recipe.frame.w / 2);
+    setPixel(channels.core, cx, Math.max(1, Math.floor(recipe.frame.h / 2) - frame));
+  }
+  if (recipe.render.silhouette === "impact.hurt-wedge") {
     channels.core = createMask(recipe.frame.w, recipe.frame.h);
   }
   if (recipe.render.silhouette === "glyph.damage") {

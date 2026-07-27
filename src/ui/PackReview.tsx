@@ -54,14 +54,14 @@ export function PackReview() {
           </div>
         </div>
         <p>
-          The architecture is testable and the internal slice renders. Palette and
-          fixture approvals remain open, so this is not visual acceptance.
+          The architecture is testable and all Tier 1 recipes render. Hostile ramp B
+          is approved; fixture and socket approvals remain open.
         </p>
         <div className="metric-row">
           <div><strong>{implementedCount}/17</strong><span>Tier 1 recipes in slice</span></div>
           <div><strong>{recipeValidCount}/{INTERNAL_SLICE_RECIPES.length}</strong><span>Recipe contracts valid</span></div>
           <div><strong>{packValidation?.valid ? "PASS" : "…"}</strong><span>Portable manifest</span></div>
-          <div><strong>0</strong><span>Visual approvals claimed</span></div>
+          <div><strong>1</strong><span>Visual approval recorded</span></div>
         </div>
       </div>
 
@@ -136,8 +136,8 @@ export function PackReview() {
         <div className="approval-warning">
           <strong>Approval still required</strong>
           <p>
-            Candidate hostile ramp, exact actor sockets, remaining Actor Forge
-            archetypes, and real map corpus.
+            Exact actor sockets, remaining Actor Forge archetypes, real map corpus,
+            and the final EF-0 gate.
           </p>
         </div>
       </aside>

@@ -1320,6 +1320,7 @@ input[type="range"] {
 }
 
 .palette-candidates button {
+  position: relative;
   min-width: 0;
   display: grid;
   grid-template-columns: 25px 34px minmax(0, 1fr);
@@ -1333,6 +1334,17 @@ input[type="range"] {
   background: #10161d;
   text-align: left;
   cursor: pointer;
+}
+
+.palette-candidates button[data-approved="true"]::after {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  content: "LOCKED";
+  color: var(--cyan);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 5px;
+  letter-spacing: 0.12em;
 }
 
 .palette-candidates button:hover {
@@ -1606,6 +1618,16 @@ input[type="range"] {
   color: var(--muted);
   font-size: 8px;
   line-height: 1.5;
+}
+
+.decision-card.approved {
+  border-color: #376b62;
+  background:
+    linear-gradient(135deg, rgba(33, 88, 78, 0.28), rgba(18, 35, 31, 0.24));
+}
+
+.decision-card.approved > strong {
+  color: var(--cyan);
 }
 
 @media (max-width: 1250px) {

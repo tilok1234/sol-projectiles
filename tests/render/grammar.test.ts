@@ -48,8 +48,8 @@ describe("visual projectile grammar", () => {
     expect(alphaBytes(renders[0]!.rgba)).toEqual(alphaBytes(renders[2]!.rgba));
   });
 
-  it("moves the four new projectile recipes into the internal slice", () => {
-    expect(TIER_1_ROSTER.filter((entry) => entry.status === "slice")).toHaveLength(13);
-    expect(TIER_1_ROSTER.filter((entry) => entry.status === "planned")).toHaveLength(4);
+  it("keeps the complete Tier 1 roster in the internal slice", () => {
+    expect(TIER_1_ROSTER.filter((entry) => entry.status === "slice")).toHaveLength(17);
+    expect(TIER_1_ROSTER.filter((entry) => entry.status === "planned")).toHaveLength(0);
   });
 });

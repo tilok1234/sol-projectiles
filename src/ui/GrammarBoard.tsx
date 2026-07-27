@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+  APPROVED_HOSTILE_RAMP,
   HOSTILE_RAMP_CANDIDATES,
   PALETTES,
   type HostileRampId,
@@ -41,7 +42,7 @@ function GrammarCanvas({ background, paletteId, grayscale }: GrammarCanvasProps)
 
 export function GrammarBoard() {
   const [paletteId, setPaletteId] =
-    useState<HostileRampId>("hostile-hot-core-v1");
+    useState<HostileRampId>(APPROVED_HOSTILE_RAMP.id);
   const selected =
     HOSTILE_RAMP_CANDIDATES.find((candidate) => candidate.id === paletteId) ??
     HOSTILE_RAMP_CANDIDATES[0];
@@ -52,11 +53,13 @@ export function GrammarBoard() {
     <section className="grammar-layout" aria-label="Visual Grammar Board">
       <div className="panel grammar-hero">
         <div>
-          <p className="eyebrow">Visual gate candidate · no approval recorded</p>
+          <p className="eyebrow">
+            Visual gate approved · B recorded {APPROVED_HOSTILE_RAMP.approvedOn}
+          </p>
           <h2>Seven-shape projectile grammar</h2>
           <p>
-            Choose the hostile ramp that keeps its ink on snow, its core in the
-            dungeon, and every role identifiable without color.
+            Vermilion Flare is locked for hostile identity. The comparison remains
+            available as review history across every stress condition.
           </p>
         </div>
         <div className="palette-candidates" aria-label="Hostile ramp candidates">
@@ -66,6 +69,7 @@ export function GrammarBoard() {
               <button
                 key={candidate.id}
                 className={paletteId === candidate.id ? "active" : ""}
+                data-approved={candidate.key === APPROVED_HOSTILE_RAMP.key}
                 onClick={() => setPaletteId(candidate.id)}
               >
                 <b>{candidate.key}</b>
@@ -83,9 +87,11 @@ export function GrammarBoard() {
           })}
         </div>
         <div className="preview-choice">
-          <span>Previewing</span>
+          <span>Inspecting</span>
           <strong>{selected.key} · {selected.label}</strong>
-          <small>Selection is local preview state, not approval.</small>
+          <small>
+            B is canonical. Selecting A or C only previews the comparison history.
+          </small>
         </div>
       </div>
 
@@ -153,12 +159,12 @@ export function GrammarBoard() {
             <li><span>5</span>Player mass stays subordinate</li>
           </ul>
         </div>
-        <div className="decision-card">
-          <p className="eyebrow">Decision requested</p>
-          <strong>Reply A, B, or C</strong>
+        <div className="decision-card approved">
+          <p className="eyebrow">Decision recorded</p>
+          <strong>B · Vermilion flare</strong>
           <p>
-            I’ll lock the winner only after your explicit approval, then use it
-            across every hostile projectile.
+            Canonical hostile ink, body, core, and echo are now locked across the
+            Tier 1 pack.
           </p>
         </div>
       </aside>

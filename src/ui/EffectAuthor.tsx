@@ -69,7 +69,7 @@ export function EffectAuthor({ selectedId, onSelectedId }: EffectAuthorProps) {
         </div>
         <div className="panel-note">
           <span className="note-mark">i</span>
-          This roster proves the architecture. Four Tier 1 entries remain planned.
+          All 17 Tier 1 recipes are present. Fixture and socket approvals remain open.
         </div>
       </aside>
 

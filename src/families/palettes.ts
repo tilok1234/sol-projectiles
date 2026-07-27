@@ -1,7 +1,7 @@
 export interface SemanticPalette {
   id: string;
   label: string;
-  status: "observed" | "candidate";
+  status: "observed" | "candidate" | "approved";
   ink: string;
   body: string;
   core: string;
@@ -11,21 +11,21 @@ export interface SemanticPalette {
 export const PALETTES: Record<string, SemanticPalette> = {
   "hostile-hot-core-v1": {
     id: "hostile-hot-core-v1",
-    label: "Hostile hot core",
+    label: "Vermilion flare",
+    status: "approved",
+    ink: "#1C1520",
+    body: "#B84A3D",
+    core: "#FFF0A6",
+    echo: "#6D2E32",
+  },
+  "hostile-hot-core-v1-a": {
+    id: "hostile-hot-core-v1-a",
+    label: "Crimson ember",
     status: "candidate",
     ink: "#1C1520",
     body: "#9E3047",
     core: "#FFD166",
     echo: "#5C2637",
-  },
-  "hostile-hot-core-v1-b": {
-    id: "hostile-hot-core-v1-b",
-    label: "Vermilion flare",
-    status: "candidate",
-    ink: "#1C1520",
-    body: "#B84A3D",
-    core: "#FFF0A6",
-    echo: "#6D2E32",
   },
   "hostile-hot-core-v1-c": {
     id: "hostile-hot-core-v1-c",
@@ -94,16 +94,23 @@ export const PALETTES: Record<string, SemanticPalette> = {
 
 export const SHARED_ACTOR_INK = "#1C1520";
 
+export const APPROVED_HOSTILE_RAMP = {
+  key: "B",
+  id: "hostile-hot-core-v1",
+  label: "Vermilion flare",
+  approvedOn: "2026-07-27",
+} as const;
+
 export const HOSTILE_RAMP_CANDIDATES = [
   {
     key: "A",
-    id: "hostile-hot-core-v1",
+    id: "hostile-hot-core-v1-a",
     label: "Crimson ember",
     note: "Balanced body mass with a warm core.",
   },
   {
     key: "B",
-    id: "hostile-hot-core-v1-b",
+    id: "hostile-hot-core-v1",
     label: "Vermilion flare",
     note: "Higher snow contrast and the brightest core.",
   },

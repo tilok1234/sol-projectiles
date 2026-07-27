@@ -134,6 +134,10 @@ const sceneEffects = (options: LabOptions): SceneEffect[] => {
     { id: "feedback.hit-contact", x: 166, y: 86 },
     { id: "feedback.blocked-immune", x: 121, y: 115 },
     { id: "feedback.damage-number", x: 164, y: 64 },
+    { id: "telegraph.chaser-lunge", x: 137, y: 136, progress: t },
+    { id: "telegraph.elite-cast", x: 275, y: 136, progress: t },
+    { id: "feedback.kill-pop", x: 116, y: 112 },
+    { id: "feedback.player-hurt", x: 76, y: 84, angle: Math.PI },
   ];
   if (options.density === "focus") return base.slice(0, 5);
   if (options.density === "stress") {
@@ -299,6 +303,11 @@ export const renderLabScene = (
   }
   canvas.dataset.renderSignature = (signature >>> 0).toString(16).padStart(8, "0");
   canvas.dataset.opaquePixels = String(opaquePixels);
+  canvas.dataset.effectIds = [...new Set(effects.map((entry) => entry.recipe.id))].join(",");
+  canvas.dataset.effectCount = String(effects.length);
+  canvas.dataset.uniqueEffectCount = String(
+    new Set(effects.map((entry) => entry.recipe.id)).size,
+  );
 
   void ACTOR_COMBAT_BINDINGS;
 };

@@ -52,7 +52,7 @@ export const TIER_1_ROSTER: Tier1Entry[] = [
     id: "telegraph.chaser-lunge",
     label: "Chaser lunge",
     audioId: "sfx.telegraph.lunge_windup",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "telegraph.prefire-glint",
@@ -70,7 +70,7 @@ export const TIER_1_ROSTER: Tier1Entry[] = [
     id: "telegraph.elite-cast",
     label: "Elite cast",
     audioId: "sfx.telegraph.elite_charge",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "feedback.hit-contact",
@@ -88,13 +88,13 @@ export const TIER_1_ROSTER: Tier1Entry[] = [
     id: "feedback.kill-pop",
     label: "Kill pop",
     audioId: "sfx.feedback.kill_pop",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "feedback.player-hurt",
     label: "Player hurt",
     audioId: "sfx.feedback.player_hurt",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "feedback.damage-number",

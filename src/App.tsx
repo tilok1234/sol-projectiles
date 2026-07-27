@@ -38,14 +38,14 @@ export default function App() {
         </nav>
         <div className="header-status">
           <span className="pulse" />
-          <div><strong>13/17 Tier 1 slice</strong><small>visual grammar · approval open</small></div>
+          <div><strong>17/17 Tier 1 slice</strong><small>ramp B locked · fixtures pending</small></div>
         </div>
       </header>
 
       <div className="context-bar">
         <span><b>PACK</b> tier1-internal-slice</span>
         <span><b>INK</b> #1C1520 observed</span>
-        <span><b>RAMP</b> candidate</span>
+        <span><b>RAMP</b> B · approved</span>
         <span><b>ACTORS</b> v2.3.0</span>
         <span><b>PX/TILE</b> 16</span>
         <span className="context-note">Engine-neutral · binary alpha · normal blend</span>
