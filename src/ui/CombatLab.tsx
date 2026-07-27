@@ -3,7 +3,18 @@ import {
   loadActorSheets,
   type ActorSheetSet,
 } from "../fixtures/actor-pack/assets";
-import { BACKGROUND_LABELS } from "../lab/backgrounds";
+import {
+  loadSpriteForgeSheets,
+  SPRITE_FORGE_CORPUS,
+  type SpriteForgeActorSet,
+  type SpriteForgeSheetSet,
+} from "../fixtures/sprite-forge-full/assets";
+import {
+  loadTileForgeReferences,
+  TILEFORGE_REFERENCE_CORPUS,
+  TILEFORGE_REFERENCE_FIXTURES,
+  type TileForgeReferenceImages,
+} from "../fixtures/tileforge-reference/assets";
 import { renderLabScene } from "../lab/scene";
 import type { BackgroundId } from "../model/types";
 import { downloadCanvas } from "../renderer/canvas";
@@ -17,13 +28,33 @@ export function CombatLab() {
   const [density, setDensity] = useState<"focus" | "slice" | "stress">("slice");
   const [time, setTime] = useState(0.5);
   const [socket, setSocket] = useState<[number, number]>([19, 14]);
+  const [actorSet, setActorSet] = useState<SpriteForgeActorSet>("skirmish");
   const [playing, setPlaying] = useState(false);
   const [actorSheets, setActorSheets] = useState<ActorSheetSet | null>(null);
+  const [spriteForgeSheets, setSpriteForgeSheets] =
+    useState<SpriteForgeSheetSet | null>(null);
+  const [tileForgeReferences, setTileForgeReferences] =
+    useState<TileForgeReferenceImages | null>(null);
 
   useEffect(() => {
     let active = true;
     void loadActorSheets().then((sheets) => {
       if (active) setActorSheets(sheets);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    void Promise.all([
+      loadSpriteForgeSheets(),
+      loadTileForgeReferences(),
+    ]).then(([sheets, references]) => {
+      if (!active) return;
+      setSpriteForgeSheets(sheets);
+      setTileForgeReferences(references);
     });
     return () => {
       active = false;
@@ -41,9 +72,13 @@ export function CombatLab() {
       density,
       time,
       socket,
+      actorSet,
       actorSheets: actorSheets ?? undefined,
+      spriteForgeSheets: spriteForgeSheets ?? undefined,
+      tileForgeReferences: tileForgeReferences ?? undefined,
     });
   }, [
+    actorSet,
     actorSheets,
     background,
     density,
@@ -51,6 +86,8 @@ export function CombatLab() {
     hitboxTruth,
     layerOrderMode,
     socket,
+    spriteForgeSheets,
+    tileForgeReferences,
     time,
   ]);
 
@@ -68,7 +105,7 @@ export function CombatLab() {
         <div className="panel-heading lab-heading">
           <div>
             <p className="eyebrow">
-              Actor Forge v2.3.0 · deterministic map stand-ins
+              Sprite Forge full pack · TileForge reference corpus
             </p>
             <h2>Combat Lab</h2>
           </div>
@@ -103,7 +140,7 @@ export function CombatLab() {
             aria-label="Fixed combat readability scene"
           />
           <div className="canvas-badges">
-            <span>{BACKGROUND_LABELS[background]}</span>
+            <span>{TILEFORGE_REFERENCE_FIXTURES[background].label}</span>
             <span>320×180 · 1× truth</span>
           </div>
         </div>
@@ -159,13 +196,15 @@ export function CombatLab() {
             value={background}
             onChange={(event) => setBackground(event.target.value as BackgroundId)}
           >
-            {(Object.keys(BACKGROUND_LABELS) as BackgroundId[]).map((id) => (
+            {(Object.keys(TILEFORGE_REFERENCE_FIXTURES) as BackgroundId[]).map((id) => (
               <option value={id} key={id}>
-                {BACKGROUND_LABELS[id]}
+                {TILEFORGE_REFERENCE_FIXTURES[id].label}
               </option>
             ))}
           </select>
-          <small>Synthetic deterministic map; reference-map import is pending.</small>
+          <small>
+            Real TileForge RD7 reference crop · source tiles remain 32px.
+          </small>
         </div>
 
         <div className="control-group">
@@ -183,10 +222,31 @@ export function CombatLab() {
           </div>
         </div>
 
+        <div className="control-group">
+          <div className="label-row">
+            <label>Sprite Forge actor cast</label>
+            <span>{spriteForgeSheets ? `${SPRITE_FORGE_CORPUS.actors} actors` : "loading"}</span>
+          </div>
+          <div className="segmented">
+            {(["skirmish", "arcane"] as const).map((value) => (
+              <button
+                key={value}
+                className={actorSet === value ? "active" : ""}
+                onClick={() => setActorSet(value)}
+              >
+                {value}
+              </button>
+            ))}
+          </div>
+          <small>
+            Six manifest-backed representatives are live from the supplied pack.
+          </small>
+        </div>
+
         <div className="control-group socket-editor">
           <div className="label-row">
-            <label>Bandit · south · attack 2</label>
-            <span>{actorSheets ? "real sheet" : "loading"}</span>
+            <label>Hostile cast · candidate socket</label>
+            <span>{spriteForgeSheets ? "full pack" : actorSheets ? "v2.3 fallback" : "loading"}</span>
           </div>
           <p>Weapon-tip socket</p>
           <div className="coordinate-inputs">
@@ -221,10 +281,13 @@ export function CombatLab() {
         <div className="truth-note">
           <strong>Truth source</strong>
           <p>
-            The delayed marker and cyan collision overlay are rasterized from the
-            same circle geometry object. The active hazard reuses that exact area
-            with a categorical fill change.
+            Effects are composited over the supplied TileForge RD7 reference scenes.
+            Telegraphs and cyan collision overlays still rasterize the same geometry
+            object.
           </p>
+          <small>
+            {TILEFORGE_REFERENCE_CORPUS.scenes} scenes · {TILEFORGE_REFERENCE_CORPUS.flagships} flagships · {TILEFORGE_REFERENCE_CORPUS.themes} themes
+          </small>
         </div>
       </aside>
     </section>

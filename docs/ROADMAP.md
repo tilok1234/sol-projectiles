@@ -19,8 +19,10 @@ Target: Gate EF-0 candidate plus the internal vertical slice.
 - [x] Combat Lab with fixed synthetic density fixture
 - [x] Pack Review completeness matrix
 - [x] Supplied Actor Forge v2.3.0 adventurer/bandit fixtures embedded
-- [ ] User-facing Actor Forge ZIP importer and remaining six fixture archetypes
-- [ ] Real TileForge reference-map fixture import
+- [x] Supplied 231-actor Sprite Forge corpus imported read-only
+- [x] Six representative actor archetypes live in Combat Lab
+- [x] Real TileForge RD7 reference-map fixture import
+- [ ] User-facing Sprite Forge ZIP importer
 - [x] Final hostile ramp approval: B — Vermilion Flare
 - [ ] Exact actor socket/release binding approval
 - [ ] EF-0 explicit approval
@@ -35,8 +37,9 @@ The current implementation count is 17/17. Chaser lunge and elite cast reuse
 recipe geometry as visible telegraph truth; kill pop remains local and brief;
 player hurt is a directional actor-centered wedge with no full-screen flash.
 
-EF-1 remains closed until the real Actor Forge/map fixtures, exact socket
-bindings, deterministic evidence pack, and explicit visual approval are complete.
+EF-1 remains closed until exact socket/release bindings, representative actor-cast
+approval, deterministic evidence pack, and explicit final visual approval are
+complete.
 
 ## Deferred by contract
 

@@ -54,8 +54,8 @@ export function PackReview() {
           </div>
         </div>
         <p>
-          The architecture is testable and all Tier 1 recipes render. Hostile ramp B
-          is approved; fixture and socket approvals remain open.
+          All Tier 1 recipes render against the supplied Sprite Forge and TileForge
+          corpora. Hostile ramp B is approved; socket approvals remain open.
         </p>
         <div className="metric-row">
           <div><strong>{implementedCount}/17</strong><span>Tier 1 recipes in slice</span></div>
@@ -136,7 +136,7 @@ export function PackReview() {
         <div className="approval-warning">
           <strong>Approval still required</strong>
           <p>
-            Exact actor sockets, remaining Actor Forge archetypes, real map corpus,
+            Exact actor sockets, release events, representative actor-cast selection,
             and the final EF-0 gate.
           </p>
         </div>

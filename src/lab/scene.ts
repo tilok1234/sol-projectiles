@@ -4,6 +4,12 @@ import type {
   ActorSheetSet,
   FixtureActorId,
 } from "../fixtures/actor-pack/assets";
+import type {
+  SpriteForgeActorId,
+  SpriteForgeActorSet,
+  SpriteForgeSheetSet,
+} from "../fixtures/sprite-forge-full/assets";
+import type { TileForgeReferenceImages } from "../fixtures/tileforge-reference/assets";
 import { layerOrder } from "../model/layers";
 import type {
   BackgroundId,
@@ -23,7 +29,10 @@ export interface LabOptions {
   density: "focus" | "slice" | "stress";
   time: number;
   socket: [number, number];
+  actorSet: SpriteForgeActorSet;
   actorSheets?: ActorSheetSet;
+  spriteForgeSheets?: SpriteForgeSheetSet;
+  tileForgeReferences?: TileForgeReferenceImages;
 }
 
 interface SceneEffect {
@@ -86,6 +95,58 @@ const drawActorSheet = (
     y - 27,
     32,
     32,
+  );
+  context.restore();
+};
+
+const drawSpriteForgeActor = (
+  context: CanvasRenderingContext2D,
+  sheet: HTMLImageElement,
+  x: number,
+  y: number,
+  frameRow: number,
+  frameColumn: number,
+  grayscale: boolean,
+): void => {
+  context.save();
+  context.imageSmoothingEnabled = false;
+  if (grayscale) context.filter = "grayscale(1)";
+  context.drawImage(
+    sheet,
+    frameColumn * 64,
+    frameRow * 64,
+    64,
+    64,
+    x - 16,
+    y - 27,
+    32,
+    32,
+  );
+  context.restore();
+};
+
+const drawTileForgeReference = (
+  context: CanvasRenderingContext2D,
+  image: HTMLImageElement,
+  width: number,
+  height: number,
+): void => {
+  const sourceWidth = Math.min(width, image.naturalWidth);
+  const sourceHeight = Math.min(height, image.naturalHeight);
+  const sourceX = Math.floor((image.naturalWidth - sourceWidth) / 2);
+  const sourceY = Math.floor((image.naturalHeight - sourceHeight) / 2);
+  context.save();
+  context.imageSmoothingEnabled = false;
+  context.drawImage(
+    image,
+    sourceX,
+    sourceY,
+    sourceWidth,
+    sourceHeight,
+    0,
+    0,
+    width,
+    height,
   );
   context.restore();
 };
@@ -184,19 +245,42 @@ export const renderLabScene = (
   if (!context) throw new Error("Canvas 2D is unavailable.");
   context.imageSmoothingEnabled = false;
   context.clearRect(0, 0, canvas.width, canvas.height);
-  drawBackground(context, options.background, canvas.width, canvas.height);
+  const tileForgeReference = options.tileForgeReferences?.[options.background];
+  if (tileForgeReference) {
+    drawTileForgeReference(
+      context,
+      tileForgeReference,
+      canvas.width,
+      canvas.height,
+    );
+  } else {
+    drawBackground(context, options.background, canvas.width, canvas.height);
+  }
 
   const effects = sceneEffects(options)
     .map((entry) => ({ ...entry, recipe: recipe(entry.id) }))
     .sort((a, b) => layerOrder(a.recipe.worldLayer) - layerOrder(b.recipe.worldLayer));
 
-  const actors = [
+  const skirmishActors: Array<{
+    x: number;
+    y: number;
+    team: "player" | "hostile";
+    actor: FixtureActorId;
+    sourceActor: SpriteForgeActorId;
+    frameColumn: number;
+    sourceRow: number;
+    sourceColumn: number;
+    layer: WorldLayer;
+  }> = [
     {
       x: 76,
       y: 101,
       team: "player" as const,
       actor: "adventurer" as FixtureActorId,
+      sourceActor: "ranger",
       frameColumn: 10,
+      sourceRow: 8,
+      sourceColumn: 1,
       layer: "ACTOR" as WorldLayer,
     },
     {
@@ -204,7 +288,10 @@ export const renderLabScene = (
       y: 101,
       team: "hostile" as const,
       actor: "bandit" as FixtureActorId,
+      sourceActor: "skeleton",
       frameColumn: 13,
+      sourceRow: 8,
+      sourceColumn: 1,
       layer: "ACTOR" as WorldLayer,
     },
     {
@@ -212,7 +299,10 @@ export const renderLabScene = (
       y: 101,
       team: "hostile" as const,
       actor: "bandit" as FixtureActorId,
+      sourceActor: "cultist",
       frameColumn: 9,
+      sourceRow: 3,
+      sourceColumn: 1,
       layer: "ACTOR" as WorldLayer,
     },
     {
@@ -220,10 +310,36 @@ export const renderLabScene = (
       y: 137,
       team: "hostile" as const,
       actor: "bandit" as FixtureActorId,
+      sourceActor: "timberwolf",
       frameColumn: 2,
+      sourceRow: 2,
+      sourceColumn: 1,
       layer: "ACTOR" as WorldLayer,
     },
   ];
+
+  const actors =
+    options.actorSet === "arcane"
+      ? skirmishActors.map((entry, index) => {
+          if (index === 0) {
+            return {
+              ...entry,
+              sourceActor: "warlock" as const,
+              sourceRow: 12,
+              sourceColumn: 1,
+            };
+          }
+          if (index === 1) {
+            return {
+              ...entry,
+              sourceActor: "corruptrobe" as const,
+              sourceRow: 12,
+              sourceColumn: 1,
+            };
+          }
+          return entry;
+        })
+      : skirmishActors;
 
   const drawable = [
     ...effects.map((entry) => ({ kind: "effect" as const, order: layerOrder(entry.recipe.worldLayer), entry })),
@@ -232,6 +348,20 @@ export const renderLabScene = (
 
   for (const item of drawable) {
     if (item.kind === "actor") {
+      const sourceSheet =
+        options.spriteForgeSheets?.[item.entry.sourceActor];
+      if (sourceSheet) {
+        drawSpriteForgeActor(
+          context,
+          sourceSheet,
+          item.entry.x,
+          item.entry.y,
+          item.entry.sourceRow,
+          item.entry.sourceColumn,
+          options.grayscale,
+        );
+        continue;
+      }
       const theme = themeForBackground(options.background);
       const sheet = options.actorSheets?.[item.entry.actor]?.[theme];
       if (sheet) {
@@ -308,6 +438,17 @@ export const renderLabScene = (
   canvas.dataset.uniqueEffectCount = String(
     new Set(effects.map((entry) => entry.recipe.id)).size,
   );
+  canvas.dataset.backgroundSource = tileForgeReference
+    ? "tileforge-reference"
+    : "synthetic-fallback";
+  canvas.dataset.actorSource = options.spriteForgeSheets
+    ? "sprite-forge-full"
+    : options.actorSheets
+      ? "actor-forge-v2.3-fallback"
+      : "proxy-fallback";
+  canvas.dataset.actorIds = actors
+    .map((entry) => entry.sourceActor)
+    .join(",");
 
   void ACTOR_COMBAT_BINDINGS;
 };

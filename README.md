@@ -9,7 +9,7 @@ tool. It connects three surfaces:
 
 The current `0.1.0` build is an **EF-0 contract candidate with the complete
 Tier 1 recipe roster**. It intentionally does not claim the EF-1 visual gate
-while real map/actor fixtures and socket approvals remain open.
+while exact socket/release bindings and final fixture review remain open.
 
 ## Run it
 
@@ -37,10 +37,15 @@ greyscale, hitbox-truth and layer-order modes, deterministic frame scrubbing,
 actor socket editing, recipe JSON inspection, PNG evidence capture, canonical
 pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
 
-The app embeds the real supplied Actor Forge v2.3.0 adventurer and bandit sheets
-for all four themes. Combat socket coordinates remain candidate companion data.
-The five map fixtures are deliberately identified as deterministic stand-ins;
-TileForge reference-map import remains a Phase A follow-up.
+The repository embeds the supplied Sprite Forge full pack: 231 manifest-backed
+actors plus props, projectiles, and effects. Combat Lab exposes six representative
+actors across skirmish and arcane casts, with the previous Actor Forge v2.3.0
+adventurer/bandit sheets retained as a loading fallback.
+
+The supplied TileForge RD7 sprite-reference corpus is also embedded: 13 scenes,
+three flagships, four themes, palettes, cadence evidence, manifest, and showcase
+recipe. Combat Lab uses five real 1× reference crops instead of synthetic map
+stand-ins. See [docs/FIXTURE_IMPORT.md](docs/FIXTURE_IMPORT.md).
 
 ## Contract decisions
 

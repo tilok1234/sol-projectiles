@@ -38,7 +38,7 @@ export default function App() {
         </nav>
         <div className="header-status">
           <span className="pulse" />
-          <div><strong>17/17 Tier 1 slice</strong><small>ramp B locked · fixtures pending</small></div>
+          <div><strong>17/17 Tier 1 slice</strong><small>real fixtures · sockets pending</small></div>
         </div>
       </header>
 
@@ -46,8 +46,10 @@ export default function App() {
         <span><b>PACK</b> tier1-internal-slice</span>
         <span><b>INK</b> #1C1520 observed</span>
         <span><b>RAMP</b> B · approved</span>
-        <span><b>ACTORS</b> v2.3.0</span>
-        <span><b>PX/TILE</b> 16</span>
+        <span><b>ACTORS</b> full pack · 231</span>
+        <span><b>MAPS</b> RD7 reference</span>
+        <span><b>FX PX/TILE</b> 16</span>
+        <span><b>WORLD TILE</b> 32</span>
         <span className="context-note">Engine-neutral · binary alpha · normal blend</span>
       </div>
 
@@ -62,7 +64,7 @@ export default function App() {
 
       <footer className="app-footer">
         <span>Deterministic recipe renderer</span>
-        <span>Map stand-ins are labelled</span>
+        <span>Supplied fixture corpora embedded</span>
         <span>Structural success ≠ visual acceptance</span>
       </footer>
     </div>
