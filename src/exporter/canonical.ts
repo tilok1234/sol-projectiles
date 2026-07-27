@@ -22,10 +22,16 @@ const toHex = (bytes: Uint8Array): string =>
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
 
+export const sha256BytesHex = async (bytes: Uint8Array): Promise<string> => {
+  const copy = new Uint8Array(bytes.byteLength);
+  copy.set(bytes);
+  const digest = await crypto.subtle.digest("SHA-256", copy.buffer);
+  return toHex(new Uint8Array(digest));
+};
+
 export const sha256Hex = async (value: unknown): Promise<string> => {
   const data = new TextEncoder().encode(canonicalJson(value));
-  const digest = await crypto.subtle.digest("SHA-256", data);
-  return toHex(new Uint8Array(digest));
+  return sha256BytesHex(data);
 };
 
 export const shortStableId = (value: unknown): string => {

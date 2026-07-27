@@ -55,7 +55,8 @@ export function PackReview() {
         </div>
         <p>
           All Tier 1 recipes render against the supplied Sprite Forge and TileForge
-          corpora. Hostile ramp B is approved; socket approvals remain open.
+          corpora. Hostile ramp B is approved; deterministic socket evidence is
+          available and socket approvals remain open.
         </p>
         <div className="metric-row">
           <div><strong>{implementedCount}/17</strong><span>Tier 1 recipes in slice</span></div>

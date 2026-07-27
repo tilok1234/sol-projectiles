@@ -1,0 +1,195 @@
+{
+  "actors": [
+    {
+      "actorId": "ranger",
+      "effectId": "player.accurate-shot",
+      "frameCount": 3,
+      "label": "Ranger",
+      "mainSocket": "weaponTip",
+      "prefireFrame": 1,
+      "prefireSocket": [
+        22,
+        15
+      ],
+      "releaseEvent": "attack.release",
+      "releaseFrame": 2,
+      "releaseSocket": [
+        25,
+        16
+      ],
+      "row": 8,
+      "rowLabel": "attack-down"
+    },
+    {
+      "actorId": "warlock",
+      "effectId": "player.pierce-return",
+      "frameCount": 3,
+      "label": "Warlock",
+      "mainSocket": "castOrigin",
+      "prefireFrame": 0,
+      "prefireSocket": [
+        12,
+        14
+      ],
+      "releaseEvent": "cast.release",
+      "releaseFrame": 1,
+      "releaseSocket": [
+        11,
+        12
+      ],
+      "row": 12,
+      "rowLabel": "cast-down"
+    },
+    {
+      "actorId": "skeleton",
+      "effectId": "hostile.radial-shard",
+      "frameCount": 3,
+      "label": "Skeleton",
+      "mainSocket": "hand",
+      "prefireFrame": 1,
+      "prefireSocket": [
+        20,
+        16
+      ],
+      "releaseEvent": "attack.release",
+      "releaseFrame": 2,
+      "releaseSocket": [
+        22,
+        18
+      ],
+      "row": 8,
+      "rowLabel": "attack-down"
+    },
+    {
+      "actorId": "cultist",
+      "effectId": "hostile.predictive-orb",
+      "frameCount": 2,
+      "label": "Cultist",
+      "mainSocket": "castOrigin",
+      "prefireFrame": 0,
+      "prefireSocket": [
+        17,
+        17
+      ],
+      "releaseEvent": "cast.release",
+      "releaseFrame": 1,
+      "releaseSocket": [
+        20,
+        15
+      ],
+      "row": 12,
+      "rowLabel": "cast-down"
+    },
+    {
+      "actorId": "corruptrobe",
+      "effectId": "hostile.fan-crescent",
+      "frameCount": 3,
+      "label": "Corrupt robe",
+      "mainSocket": "castOrigin",
+      "prefireFrame": 0,
+      "prefireSocket": [
+        16,
+        17
+      ],
+      "releaseEvent": "cast.release",
+      "releaseFrame": 1,
+      "releaseSocket": [
+        18,
+        15
+      ],
+      "row": 12,
+      "rowLabel": "cast-down"
+    },
+    {
+      "actorId": "timberwolf",
+      "effectId": "feedback.hit-contact",
+      "frameCount": 2,
+      "label": "Timber wolf",
+      "mainSocket": "head",
+      "prefireFrame": 0,
+      "prefireSocket": [
+        16,
+        25
+      ],
+      "releaseEvent": "attack.release",
+      "releaseFrame": 1,
+      "releaseSocket": [
+        16,
+        26
+      ],
+      "row": 8,
+      "rowLabel": "attack-down"
+    }
+  ],
+  "approval": {
+    "approved": 0,
+    "state": "open",
+    "total": 6
+  },
+  "checks": [
+    {
+      "detail": "1D93D0F3D96A7C92D284891F39B90D602AE721C84742B78EBE3F598587EE1549",
+      "id": "actor-pack-hash",
+      "label": "Actor pack manifest is pinned",
+      "passed": true
+    },
+    {
+      "detail": "ranger, warlock, skeleton, cultist, corruptrobe, timberwolf",
+      "id": "representative-cast",
+      "label": "Six unique review actors are present",
+      "passed": true
+    },
+    {
+      "detail": "attack-down row 8 · cast-down row 12",
+      "id": "manifest-rows",
+      "label": "Source rows and frame counts match the manifest",
+      "passed": true
+    },
+    {
+      "detail": "zero-based event frames",
+      "id": "event-bounds",
+      "label": "Prefire and release events are frame-bounded",
+      "passed": true
+    },
+    {
+      "detail": "hand · weaponTip · castOrigin · head",
+      "id": "socket-completeness",
+      "label": "Every reviewed frame has its primary socket",
+      "passed": true
+    },
+    {
+      "detail": "0..31 × 0..31",
+      "id": "coordinate-bounds",
+      "label": "All anchors use integer logical-cell coordinates",
+      "passed": true
+    },
+    {
+      "detail": "six candidate runtime mappings",
+      "id": "tier1-effects",
+      "label": "Every release maps to a real Tier 1 effect",
+      "passed": true
+    },
+    {
+      "detail": "956×508 RGBA",
+      "id": "visual-surface",
+      "label": "Evidence surface has expected dimensions and visible pixels",
+      "passed": true
+    }
+  ],
+  "evidenceVersion": "0.1.0",
+  "forge": "tileforge-effect-forge",
+  "kind": "socket-release-review",
+  "source": {
+    "actorPackManifestSha256": "1D93D0F3D96A7C92D284891F39B90D602AE721C84742B78EBE3F598587EE1549",
+    "bindingSha256": "651f27ddbf1accf1643afe534666e279cb4f113492a1ab4fd7e1292e289c6742"
+  },
+  "status": "candidate",
+  "valid": true,
+  "visual": {
+    "height": 508,
+    "pixelSha256": "38fbffaa2593f6b6df58fbd0c1d757c3ab8feee06f120df53de0ab73acfcb131",
+    "stateCount": 12,
+    "statesPerActor": 2,
+    "width": 956
+  }
+}

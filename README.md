@@ -7,7 +7,8 @@ tool. It connects three surfaces:
 - **Combat Lab** for fixed-density readability and hitbox-truth inspection;
 - **Pack Review** for gate status, validation, and deterministic export;
 - **Visual Grammar** for the approved hostile-ramp comparison; and
-- **Socket Review** for exact six-actor frame and anchor proposals.
+- **Socket Review** for exact six-actor frame and anchor proposals; and
+- **Evidence** for the deterministic prefire/release contact sheet and report.
 
 The current `0.1.0` build is an **EF-0 contract candidate with the complete
 Tier 1 recipe roster**. It intentionally does not claim the EF-1 visual gate
@@ -37,8 +38,8 @@ projectile silhouettes, both ground-telegraph classes, and the complete feedback
 set. It includes five real reference-map stress backgrounds, greyscale,
 hitbox-truth and layer-order modes, deterministic frame scrubbing, an editable
 six-actor socket/release board, a binding-driven prefire/release runtime preview,
-recipe JSON inspection, PNG evidence capture, canonical pack export/re-import,
-and an A/B/C hostile-ramp Visual Grammar board.
+recipe JSON inspection, one-click socket evidence PNG and validation JSON,
+canonical pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
 
 The repository embeds the supplied Sprite Forge full pack: 231 manifest-backed
 actors plus props, projectiles, and effects. Combat Lab exposes six representative
@@ -66,3 +67,5 @@ The active palette review is documented in
 [docs/VISUAL_GRAMMAR_REVIEW.md](docs/VISUAL_GRAMMAR_REVIEW.md).
 The open binding gate is documented in
 [docs/SOCKET_RELEASE_REVIEW.md](docs/SOCKET_RELEASE_REVIEW.md).
+The current deterministic candidate pair is checked in under
+[evidence/](evidence/README.md).

@@ -58,3 +58,19 @@ or frame buttons to inspect:
 
 This is runtime integration evidence, not approval. It replaces the earlier
 hand-entered `[19, 14]` Combat Lab socket shortcut.
+
+## Deterministic evidence export
+
+Open **06 Evidence** to review all six actors at their prefire and release
+frames on one contact sheet. **Export evidence PNG + JSON** produces:
+
+- `socket-release-evidence-candidate.png`
+- `socket-release-validation-report.json`
+
+The report includes the imported actor-pack manifest SHA-256, canonical binding
+SHA-256, raw contact-sheet pixel SHA-256, 12 state records, and eight structural
+checks. It deliberately has no generation timestamp, uses stable filenames, and
+records `status: candidate`, `approval.state: open`, and `approved: 0`.
+
+Passing report checks establish reproducibility and contract integrity. They do
+not establish visual approval.
