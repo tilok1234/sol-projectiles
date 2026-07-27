@@ -8,13 +8,13 @@
       "mainSocket": "weaponTip",
       "prefireFrame": 1,
       "prefireSocket": [
-        22,
+        10,
         15
       ],
       "releaseEvent": "attack.release",
       "releaseFrame": 2,
       "releaseSocket": [
-        25,
+        10,
         16
       ],
       "row": 8,
@@ -28,13 +28,13 @@
       "mainSocket": "castOrigin",
       "prefireFrame": 0,
       "prefireSocket": [
-        12,
+        9,
         14
       ],
       "releaseEvent": "cast.release",
       "releaseFrame": 1,
       "releaseSocket": [
-        11,
+        9,
         12
       ],
       "row": 12,
@@ -48,13 +48,13 @@
       "mainSocket": "hand",
       "prefireFrame": 1,
       "prefireSocket": [
-        20,
+        10,
         16
       ],
       "releaseEvent": "attack.release",
       "releaseFrame": 2,
       "releaseSocket": [
-        22,
+        10,
         18
       ],
       "row": 8,
@@ -68,14 +68,14 @@
       "mainSocket": "castOrigin",
       "prefireFrame": 0,
       "prefireSocket": [
-        17,
-        17
+        15,
+        13
       ],
       "releaseEvent": "cast.release",
       "releaseFrame": 1,
       "releaseSocket": [
-        20,
-        15
+        15,
+        13
       ],
       "row": 12,
       "rowLabel": "cast-down"
@@ -89,13 +89,13 @@
       "prefireFrame": 0,
       "prefireSocket": [
         16,
-        17
+        5
       ],
       "releaseEvent": "cast.release",
       "releaseFrame": 1,
       "releaseSocket": [
-        18,
-        15
+        16,
+        4
       ],
       "row": 12,
       "rowLabel": "cast-down"
@@ -108,14 +108,14 @@
       "mainSocket": "head",
       "prefireFrame": 0,
       "prefireSocket": [
-        16,
-        25
+        9,
+        22
       ],
       "releaseEvent": "attack.release",
       "releaseFrame": 1,
       "releaseSocket": [
-        16,
-        26
+        9,
+        24
       ],
       "row": 8,
       "rowLabel": "attack-down"
@@ -181,13 +181,13 @@
   "kind": "socket-release-review",
   "source": {
     "actorPackManifestSha256": "1D93D0F3D96A7C92D284891F39B90D602AE721C84742B78EBE3F598587EE1549",
-    "bindingSha256": "651f27ddbf1accf1643afe534666e279cb4f113492a1ab4fd7e1292e289c6742"
+    "bindingSha256": "2c94f039ef19d0e16a4562ddb1971d64e18fb2452f0633b3c9bb6f06c18b59bb"
   },
   "status": "candidate",
   "valid": true,
   "visual": {
     "height": 508,
-    "pixelSha256": "38fbffaa2593f6b6df58fbd0c1d757c3ab8feee06f120df53de0ab73acfcb131",
+    "pixelSha256": "bd6051d87dc6bb235804ac9be310a571520491aa03f31b50ee114afb6ce614b3",
     "stateCount": 12,
     "statesPerActor": 2,
     "width": 956

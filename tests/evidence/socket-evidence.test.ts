@@ -83,7 +83,8 @@ describe("socket evidence report", () => {
     expect(JSON.parse(first)).toEqual(report);
   });
 
-  it("keeps the checked-in candidate artifact explicit and self-consistent", () => {
+  it("keeps the checked-in candidate artifact explicit and self-consistent", async () => {
+    const expected = await buildSocketEvidenceReport(evidencePixels());
     expect(checkedEvidenceReport).toMatchObject({
       forge: "tileforge-effect-forge",
       kind: "socket-release-review",
@@ -106,5 +107,9 @@ describe("socket evidence report", () => {
       true,
     );
     expect(checkedEvidenceReport.actors).toHaveLength(6);
+    expect(checkedEvidenceReport.source.bindingSha256).toBe(
+      expected.source.bindingSha256,
+    );
+    expect(checkedEvidenceReport.actors).toEqual(expected.actors);
   });
 });

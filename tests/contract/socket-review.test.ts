@@ -53,6 +53,24 @@ describe("six-actor socket and release candidates", () => {
     }
   });
 
+  it("keeps primary release sockets on the visually audited emission points", () => {
+    const releaseSockets = Object.fromEntries(
+      SOCKET_REVIEW_CANDIDATES.map((candidate) => [
+        candidate.actorId,
+        candidate.frames[candidate.releaseFrame]![candidate.mainSocket],
+      ]),
+    );
+
+    expect(releaseSockets).toEqual({
+      ranger: [10, 16],
+      warlock: [9, 12],
+      skeleton: [10, 18],
+      cultist: [15, 13],
+      corruptrobe: [16, 4],
+      timberwolf: [9, 24],
+    });
+  });
+
   it("compiles deterministic companion bindings without recording approval", () => {
     expect(SOCKET_REVIEW_STATUS).toEqual({
       state: "candidate",

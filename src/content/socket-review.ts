@@ -47,7 +47,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "attack.release",
     releaseFrame: 2,
     mainSocket: "weaponTip",
-    frames: anchors("weaponTip", [[19, 17], [22, 15], [25, 16]]),
+    frames: anchors("weaponTip", [[10, 17], [10, 15], [10, 16]]),
   },
   {
     actorId: "warlock",
@@ -59,7 +59,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "cast.release",
     releaseFrame: 1,
     mainSocket: "castOrigin",
-    frames: anchors("castOrigin", [[12, 14], [11, 12], [12, 14]]),
+    frames: anchors("castOrigin", [[9, 14], [9, 12], [9, 14]]),
   },
   {
     actorId: "skeleton",
@@ -71,7 +71,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "attack.release",
     releaseFrame: 2,
     mainSocket: "hand",
-    frames: anchors("hand", [[18, 18], [20, 16], [22, 18]]),
+    frames: anchors("hand", [[10, 18], [10, 16], [10, 18]]),
   },
   {
     actorId: "cultist",
@@ -83,7 +83,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "cast.release",
     releaseFrame: 1,
     mainSocket: "castOrigin",
-    frames: anchors("castOrigin", [[17, 17], [20, 15]]),
+    frames: anchors("castOrigin", [[15, 13], [15, 13]]),
   },
   {
     actorId: "corruptrobe",
@@ -95,7 +95,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "cast.release",
     releaseFrame: 1,
     mainSocket: "castOrigin",
-    frames: anchors("castOrigin", [[16, 17], [18, 15], [20, 14]]),
+    frames: anchors("castOrigin", [[16, 5], [16, 4], [16, 5]]),
   },
   {
     actorId: "timberwolf",
@@ -107,7 +107,7 @@ export const SOCKET_REVIEW_CANDIDATES: SocketReviewCandidate[] = [
     releaseEvent: "attack.release",
     releaseFrame: 1,
     mainSocket: "head",
-    frames: anchors("head", [[16, 25], [16, 26]], [16, 25], [16, 29]),
+    frames: anchors("head", [[9, 22], [9, 24]], [16, 25], [16, 29]),
   },
 ];
 

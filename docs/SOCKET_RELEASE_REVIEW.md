@@ -18,18 +18,24 @@ approved data.
 
 ## Candidate cast
 
-| Actor | Sequence | Source row | Frames | Primary anchor | Proposed release |
-| --- | --- | ---: | ---: | --- | ---: |
-| Ranger | attack-down | 8 | 3 | `weaponTip` | F2 |
-| Warlock | cast-down | 12 | 3 | `castOrigin` | F1 |
-| Skeleton | attack-down | 8 | 3 | `hand` | F2 |
-| Cultist | cast-down | 12 | 2 | `castOrigin` | F1 |
-| Corrupt robe | cast-down | 12 | 3 | `castOrigin` | F1 |
-| Timber wolf | attack-down | 8 | 2 | `head` | F1 |
+| Actor | Sequence | Source row | Frames | Primary anchor | Proposed release | Release point |
+| --- | --- | ---: | ---: | --- | ---: | --- |
+| Ranger | attack-down | 8 | 3 | `weaponTip` | F2 | `[10, 16]` |
+| Warlock | cast-down | 12 | 3 | `castOrigin` | F1 | `[9, 12]` |
+| Skeleton | attack-down | 8 | 3 | `hand` | F2 | `[10, 18]` |
+| Cultist | cast-down | 12 | 2 | `castOrigin` | F1 | `[15, 13]` |
+| Corrupt robe | cast-down | 12 | 3 | `castOrigin` | F1 | `[16, 4]` |
+| Timber wolf | attack-down | 8 | 2 | `head` | F1 | `[9, 24]` |
 
 The board also shows `hurtCenter` and `groundOrigin` supporting anchors. The
 timber wolf uses quadruped-specific centers rather than inherited humanoid
 coordinates.
+
+The candidate coordinates were visually re-audited after the first evidence
+sheet exposed right-side drift. Ranger and Skeleton now use the viewer-left
+weapon/hand, Corrupt robe uses the overhead rune, Timber wolf uses the
+viewer-left head, and the two remaining cast origins are centered on their
+visible sparks. These are repaired candidates, not recorded approvals.
 
 ## Review procedure
 
