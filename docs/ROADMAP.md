@@ -13,6 +13,8 @@ Target: Gate EF-0 candidate plus the internal vertical slice.
 - [x] Integer mask renderer and exact-area geometry
 - [x] Deterministic canonical JSON and SHA-256 hashing
 - [x] Internal representative effect roster
+- [x] All seven Tier 1 projectile silhouettes
+- [x] A/B/C hostile-ramp visual grammar board
 - [x] Effect Author shell
 - [x] Combat Lab with fixed synthetic density fixture
 - [x] Pack Review completeness matrix
@@ -28,6 +30,9 @@ Target: Gate EF-0 candidate plus the internal vertical slice.
 EF-1 requires all 17 Tier 1 effects, real actor/map fixtures, deterministic
 pack compilation, greyscale role identification, telegraph/collision equality,
 and explicit visual approval. Structural tests never substitute for that review.
+
+The current implementation count is 13/17. Remaining Tier 1 recipes are chaser
+lunge, elite cast, kill pop, and player hurt.
 
 ## Deferred by contract
 

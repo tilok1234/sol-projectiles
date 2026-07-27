@@ -137,10 +137,32 @@ const sceneEffects = (options: LabOptions): SceneEffect[] => {
   ];
   if (options.density === "focus") return base.slice(0, 5);
   if (options.density === "stress") {
+    for (let index = 0; index < 5; index += 1) {
+      base.push({
+        id: "player.spread-pellet",
+        x: 101 + t * 48,
+        y: 91 + (index - 2) * 5,
+        angle: (index - 2) * 0.12,
+      });
+    }
+    base.push({
+      id: "player.pierce-return",
+      x: 132 + t * 38,
+      y: 136 - t * 10,
+      angle: -0.22,
+    });
+    for (let index = 0; index < 3; index += 1) {
+      base.push({
+        id: "hostile.fan-crescent",
+        x: 232 - t * 48,
+        y: 102 + (index - 1) * 14,
+        angle: Math.PI + (index - 1) * 0.24,
+      });
+    }
     for (let index = 0; index < 8; index += 1) {
       const angle = (Math.PI * 2 * index) / 8;
       base.push({
-        id: index % 2 === 0 ? "hostile.aimed-dart" : "hostile.predictive-orb",
+        id: "hostile.radial-shard",
         x: 176 + Math.cos(angle) * 54,
         y: 86 + Math.sin(angle) * 42,
         angle,

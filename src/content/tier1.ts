@@ -16,13 +16,13 @@ export const TIER_1_ROSTER: Tier1Entry[] = [
     id: "player.spread-pellet",
     label: "Spread pellet",
     audioId: "sfx.player.spread_volley",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "player.pierce-return",
     label: "Pierce return",
     audioId: "sfx.player.pierce_release",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "hostile.aimed-dart",
@@ -40,13 +40,13 @@ export const TIER_1_ROSTER: Tier1Entry[] = [
     id: "hostile.fan-crescent",
     label: "Fan crescent",
     audioId: "sfx.hostile.fan_release",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "hostile.radial-shard",
     label: "Radial shard",
     audioId: "sfx.hostile.radial_burst",
-    status: "planned",
+    status: "slice",
   },
   {
     id: "telegraph.chaser-lunge",

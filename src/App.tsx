@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { CombatLab } from "./ui/CombatLab";
 import { EffectAuthor } from "./ui/EffectAuthor";
+import { GrammarBoard } from "./ui/GrammarBoard";
 import { PackReview } from "./ui/PackReview";
 
-type AppView = "author" | "lab" | "pack";
+type AppView = "author" | "lab" | "pack" | "grammar";
 
 export default function App() {
   const [view, setView] = useState<AppView>("author");
@@ -31,10 +32,13 @@ export default function App() {
           <button className={view === "pack" ? "active" : ""} onClick={() => setView("pack")}>
             <span>03</span> Pack Review
           </button>
+          <button className={view === "grammar" ? "active" : ""} onClick={() => setView("grammar")}>
+            <span>04</span> Visual Grammar
+          </button>
         </nav>
         <div className="header-status">
           <span className="pulse" />
-          <div><strong>0.1.0 internal slice</strong><small>EF-0 candidate · no visual approval</small></div>
+          <div><strong>13/17 Tier 1 slice</strong><small>visual grammar · approval open</small></div>
         </div>
       </header>
 
@@ -53,11 +57,12 @@ export default function App() {
         )}
         {view === "lab" && <CombatLab />}
         {view === "pack" && <PackReview />}
+        {view === "grammar" && <GrammarBoard />}
       </div>
 
       <footer className="app-footer">
         <span>Deterministic recipe renderer</span>
-        <span>Proxy fixtures are labelled</span>
+        <span>Map stand-ins are labelled</span>
         <span>Structural success ≠ visual acceptance</span>
       </footer>
     </div>

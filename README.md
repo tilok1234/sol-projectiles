@@ -29,12 +29,11 @@ styles, recipes, and fixtures in one file.
 
 ## Current slice
 
-The app renders a player dart, hostile dart and predictive orb, actor-bound
-prefire glint, delayed marker and active hazard, flesh hit, blocked spark, and a
-pixel damage number. It includes five synthetic stress backgrounds, greyscale,
-hitbox-truth and layer-order modes, deterministic frame scrubbing, actor socket
-editing, recipe JSON inspection, PNG evidence capture, and canonical pack
-export/re-import.
+The app renders 13 of 17 Tier 1 recipes, including all seven player and hostile
+projectile silhouettes. It includes five synthetic stress backgrounds,
+greyscale, hitbox-truth and layer-order modes, deterministic frame scrubbing,
+actor socket editing, recipe JSON inspection, PNG evidence capture, canonical
+pack export/re-import, and an A/B/C hostile-ramp Visual Grammar board.
 
 The app embeds the real supplied Actor Forge v2.3.0 adventurer and bandit sheets
 for all four themes. Combat socket coordinates remain candidate companion data.
@@ -52,3 +51,5 @@ TileForge reference-map import remains a Phase A follow-up.
 - Hostile body and hot-core colors are candidates pending visual approval.
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for scope and gate status.
+The active palette review is documented in
+[docs/VISUAL_GRAMMAR_REVIEW.md](docs/VISUAL_GRAMMAR_REVIEW.md).

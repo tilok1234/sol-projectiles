@@ -87,6 +87,82 @@ export const needleMask = (width: number, height: number): Mask => {
   return mask;
 };
 
+export const playerDartMask = (width: number, height: number): Mask => {
+  const mask = createMask(width, height);
+  const cy = Math.floor(height / 2);
+  for (let x = 2; x < width - 3; x += 1) setPixel(mask, x, cy);
+  setPixel(mask, width - 3, cy);
+  setPixel(mask, width - 4, cy - 1);
+  return mask;
+};
+
+export const pelletMask = (width: number, height: number): Mask => {
+  const mask = createMask(width, height);
+  const cx = Math.floor(width / 2);
+  const cy = Math.floor(height / 2);
+  setPixel(mask, cx, cy - 1);
+  setPixel(mask, cx - 1, cy);
+  setPixel(mask, cx, cy);
+  setPixel(mask, cx + 1, cy);
+  setPixel(mask, cx, cy + 1);
+  return mask;
+};
+
+export const returnBladeMask = (width: number, height: number): Mask => {
+  const mask = createMask(width, height);
+  const cx = Math.floor(width / 2);
+  const cy = Math.floor(height / 2);
+  for (let x = cx - 5; x <= cx + 4; x += 1) {
+    setPixel(mask, x, cy);
+    if (x > cx - 4 && x < cx + 3) setPixel(mask, x, cy - 1);
+  }
+  setPixel(mask, cx - 4, cy + 1);
+  setPixel(mask, cx - 3, cy + 2);
+  setPixel(mask, cx - 2, cy + 2);
+  setPixel(mask, cx + 3, cy + 1);
+  setPixel(mask, cx + 4, cy - 1);
+  setPixel(mask, cx + 5, cy - 2);
+  return mask;
+};
+
+export const crescentMask = (width: number, height: number): Mask => {
+  const cx = Math.floor(width / 2);
+  const cy = Math.floor(height / 2);
+  const outer = circleMask(width, height, cx - 1, cy, 4);
+  const cut = circleMask(width, height, cx + 1, cy, 3);
+  const mask = subtract(outer, cut);
+  setPixel(mask, cx + 2, cy - 4);
+  setPixel(mask, cx + 2, cy + 4);
+  return mask;
+};
+
+export const starShardMask = (width: number, height: number): Mask => {
+  const mask = createMask(width, height);
+  const cx = Math.floor(width / 2);
+  const cy = Math.floor(height / 2);
+  const points: Array<[number, number]> = [
+    [0, -3],
+    [0, -2],
+    [-1, -1],
+    [0, -1],
+    [1, -1],
+    [-3, 0],
+    [-2, 0],
+    [-1, 0],
+    [0, 0],
+    [1, 0],
+    [2, 0],
+    [3, 0],
+    [-1, 1],
+    [0, 1],
+    [1, 1],
+    [0, 2],
+    [0, 3],
+  ];
+  for (const [dx, dy] of points) setPixel(mask, cx + dx, cy + dy);
+  return mask;
+};
+
 export const orbMask = (width: number, height: number): Mask =>
   circleMask(
     width,

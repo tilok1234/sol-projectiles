@@ -8,6 +8,11 @@ import {
   needleMask,
   numberMask,
   orbMask,
+  pelletMask,
+  playerDartMask,
+  crescentMask,
+  returnBladeMask,
+  starShardMask,
 } from "../masks/primitives";
 import {
   createMask,
@@ -29,6 +34,7 @@ export interface RenderOptions {
   grayscale?: boolean;
   progress?: number;
   reducedNumber?: boolean;
+  paletteId?: string;
 }
 
 interface Channels {
@@ -107,11 +113,26 @@ const buildChannels = (
   const channels = emptyChannels(recipe);
   let base: Mask;
   switch (recipe.render.silhouette) {
-    case "projectile.needle":
+    case "projectile.player-dart":
+      base = playerDartMask(recipe.frame.w, recipe.frame.h);
+      break;
+    case "projectile.hostile-needle":
       base = needleMask(recipe.frame.w, recipe.frame.h);
+      break;
+    case "projectile.pellet":
+      base = pelletMask(recipe.frame.w, recipe.frame.h);
+      break;
+    case "projectile.return-blade":
+      base = returnBladeMask(recipe.frame.w, recipe.frame.h);
       break;
     case "projectile.orb":
       base = orbMask(recipe.frame.w, recipe.frame.h);
+      break;
+    case "projectile.crescent":
+      base = crescentMask(recipe.frame.w, recipe.frame.h);
+      break;
+    case "projectile.star-shard":
+      base = starShardMask(recipe.frame.w, recipe.frame.h);
       break;
     case "socket.glint":
       base = glintMask(recipe.frame.w, recipe.frame.h, frame);
@@ -135,7 +156,10 @@ const buildChannels = (
   channels.body = base;
   channels.core = insetCore(base);
 
-  if (recipe.render.silhouette === "projectile.needle") {
+  if (
+    recipe.render.silhouette === "projectile.player-dart" ||
+    recipe.render.silhouette === "projectile.hostile-needle"
+  ) {
     channels.core = createMask(recipe.frame.w, recipe.frame.h);
     setPixel(
       channels.core,
@@ -182,8 +206,9 @@ export const renderEffect = (
 ): PixelFrame => {
   const frame = Math.abs(options.frame ?? 0) % recipe.animation.frames;
   const progress = Math.max(0, Math.min(1, options.progress ?? 0.5));
-  const palette = PALETTES[recipe.render.treatment];
-  if (!palette) throw new Error(`Unknown treatment: ${recipe.render.treatment}`);
+  const paletteId = options.paletteId ?? recipe.render.treatment;
+  const palette = PALETTES[paletteId];
+  if (!palette) throw new Error(`Unknown treatment: ${paletteId}`);
 
   const channels = buildChannels(
     recipe,

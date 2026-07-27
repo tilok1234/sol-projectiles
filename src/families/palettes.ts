@@ -18,6 +18,24 @@ export const PALETTES: Record<string, SemanticPalette> = {
     core: "#FFD166",
     echo: "#5C2637",
   },
+  "hostile-hot-core-v1-b": {
+    id: "hostile-hot-core-v1-b",
+    label: "Vermilion flare",
+    status: "candidate",
+    ink: "#1C1520",
+    body: "#B84A3D",
+    core: "#FFF0A6",
+    echo: "#6D2E32",
+  },
+  "hostile-hot-core-v1-c": {
+    id: "hostile-hot-core-v1-c",
+    label: "Violet magma",
+    status: "candidate",
+    ink: "#1C1520",
+    body: "#7D3F68",
+    core: "#FFC857",
+    echo: "#4C2948",
+  },
   "player-subordinate-v1": {
     id: "player-subordinate-v1",
     label: "Player subordinate",
@@ -75,3 +93,26 @@ export const PALETTES: Record<string, SemanticPalette> = {
 };
 
 export const SHARED_ACTOR_INK = "#1C1520";
+
+export const HOSTILE_RAMP_CANDIDATES = [
+  {
+    key: "A",
+    id: "hostile-hot-core-v1",
+    label: "Crimson ember",
+    note: "Balanced body mass with a warm core.",
+  },
+  {
+    key: "B",
+    id: "hostile-hot-core-v1-b",
+    label: "Vermilion flare",
+    note: "Higher snow contrast and the brightest core.",
+  },
+  {
+    key: "C",
+    id: "hostile-hot-core-v1-c",
+    label: "Violet magma",
+    note: "Cooler body separation on corruption maps.",
+  },
+] as const;
+
+export type HostileRampId = (typeof HOSTILE_RAMP_CANDIDATES)[number]["id"];
