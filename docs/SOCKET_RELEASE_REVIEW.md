@@ -43,3 +43,18 @@ coordinates.
 Local edits can be exported as JSON, but they are not persisted back into the
 repository and do not count as approval. After approval, the accepted
 coordinates should be recorded as an explicit gate decision.
+
+## Combat Lab runtime preview
+
+Combat Lab consumes the exported candidate binding object directly. Select an
+actor under **Candidate binding preview**, then use the deterministic timeline
+or frame buttons to inspect:
+
+- the real animation frame selected from the candidate row;
+- `prefire.begin` spawning the socket-bound glint;
+- `attack.release` or `cast.release` spawning the mapped Tier 1 effect;
+- the live logical socket and its scene-space position; and
+- the cyan or magenta binding-truth cross.
+
+This is runtime integration evidence, not approval. It replaces the earlier
+hand-entered `[19, 14]` Combat Lab socket shortcut.

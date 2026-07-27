@@ -1,13 +1,13 @@
-import { ACTOR_COMBAT_BINDINGS } from "../content/bindings";
 import { RECIPE_BY_ID } from "../content/recipes";
 import type {
   ActorSheetSet,
   FixtureActorId,
 } from "../fixtures/actor-pack/assets";
-import type {
-  SpriteForgeActorId,
-  SpriteForgeActorSet,
-  SpriteForgeSheetSet,
+import {
+  SPRITE_FORGE_ACTORS,
+  type SpriteForgeActorId,
+  type SpriteForgeActorSet,
+  type SpriteForgeSheetSet,
 } from "../fixtures/sprite-forge-full/assets";
 import type { TileForgeReferenceImages } from "../fixtures/tileforge-reference/assets";
 import { layerOrder } from "../model/layers";
@@ -20,6 +20,11 @@ import type {
 import { renderEffect } from "../renderer/renderEffect";
 import { drawPixelFrame } from "../renderer/canvas";
 import { drawBackground } from "./backgrounds";
+import {
+  logicalSocketToWorld,
+  resolveBindingPreview,
+  type BindingPreviewState,
+} from "./bindingPreview";
 
 export interface LabOptions {
   background: BackgroundId;
@@ -28,8 +33,9 @@ export interface LabOptions {
   layerOrderMode: boolean;
   density: "focus" | "slice" | "stress";
   time: number;
-  socket: [number, number];
   actorSet: SpriteForgeActorSet;
+  bindingActorId: SpriteForgeActorId;
+  bindingTruth: boolean;
   actorSheets?: ActorSheetSet;
   spriteForgeSheets?: SpriteForgeSheetSet;
   tileForgeReferences?: TileForgeReferenceImages;
@@ -183,12 +189,35 @@ const geometryOutline = (
   context.restore();
 };
 
-const sceneEffects = (options: LabOptions): SceneEffect[] => {
+const sceneEffects = (
+  options: LabOptions,
+  binding: BindingPreviewState,
+  socketWorld: [number, number],
+  travelDirection: -1 | 1,
+): SceneEffect[] => {
   const t = options.time;
+  const bindingEffects: SceneEffect[] = [];
+  if (binding.isPrefire) {
+    bindingEffects.push({
+      id: "telegraph.prefire-glint",
+      x: socketWorld[0],
+      y: socketWorld[1],
+    });
+  }
+  if (binding.hasReleased) {
+    const isContact = binding.effectId === "feedback.hit-contact";
+    bindingEffects.push({
+      id: binding.effectId,
+      x: socketWorld[0] +
+        (isContact ? 0 : travelDirection * binding.releaseProgress * 68),
+      y: socketWorld[1] +
+        (isContact ? 0 : Math.round(binding.releaseProgress * 3)),
+      angle: isContact ? undefined : travelDirection === -1 ? Math.PI : 0,
+    });
+  }
   const base: SceneEffect[] = [
     { id: "telegraph.delayed-ground", x: 214, y: 118, progress: t },
     { id: "zone.active-ground-hazard", x: 83, y: 126 },
-    { id: "telegraph.prefire-glint", x: 245 + options.socket[0] - 16, y: 88 + options.socket[1] - 27 },
     { id: "player.accurate-shot", x: 95 + t * 62, y: 88, angle: -0.08 },
     { id: "hostile.aimed-dart", x: 228 - t * 72, y: 78, angle: Math.PI },
     { id: "hostile.predictive-orb", x: 176 - t * 24, y: 55 + t * 12 },
@@ -200,7 +229,10 @@ const sceneEffects = (options: LabOptions): SceneEffect[] => {
     { id: "feedback.kill-pop", x: 116, y: 112 },
     { id: "feedback.player-hurt", x: 76, y: 84, angle: Math.PI },
   ];
-  if (options.density === "focus") return base.slice(0, 5);
+  if (options.density === "focus") {
+    return [...bindingEffects, ...base.slice(0, Math.max(1, 5 - bindingEffects.length))];
+  }
+  base.push(...bindingEffects);
   if (options.density === "stress") {
     for (let index = 0; index < 5; index += 1) {
       base.push({
@@ -256,10 +288,6 @@ export const renderLabScene = (
   } else {
     drawBackground(context, options.background, canvas.width, canvas.height);
   }
-
-  const effects = sceneEffects(options)
-    .map((entry) => ({ ...entry, recipe: recipe(entry.id) }))
-    .sort((a, b) => layerOrder(a.recipe.worldLayer) - layerOrder(b.recipe.worldLayer));
 
   const skirmishActors: Array<{
     x: number;
@@ -318,7 +346,7 @@ export const renderLabScene = (
     },
   ];
 
-  const actors =
+  const contextualActors =
     options.actorSet === "arcane"
       ? skirmishActors.map((entry, index) => {
           if (index === 0) {
@@ -339,7 +367,40 @@ export const renderLabScene = (
           }
           return entry;
         })
-      : skirmishActors;
+      : skirmishActors.map((entry) => ({ ...entry }));
+
+  const bindingPreview = resolveBindingPreview(
+    options.bindingActorId,
+    options.time,
+  );
+  const focusIsPlayer =
+    SPRITE_FORGE_ACTORS[options.bindingActorId].category === "player";
+  const focusIndex = focusIsPlayer ? 0 : 2;
+  const actors = contextualActors.map((entry, index) =>
+    index === focusIndex
+      ? {
+          ...entry,
+          team: focusIsPlayer ? ("player" as const) : ("hostile" as const),
+          sourceActor: options.bindingActorId,
+          sourceRow: bindingPreview.candidate.sourceRow,
+          sourceColumn: bindingPreview.actorFrame,
+        }
+      : entry,
+  );
+  const focusActor = actors[focusIndex]!;
+  const socketWorld = logicalSocketToWorld(
+    bindingPreview.socket,
+    focusActor.x,
+    focusActor.y,
+  );
+  const effects = sceneEffects(
+    options,
+    bindingPreview,
+    socketWorld,
+    focusIsPlayer ? 1 : -1,
+  )
+    .map((entry) => ({ ...entry, recipe: recipe(entry.id) }))
+    .sort((a, b) => layerOrder(a.recipe.worldLayer) - layerOrder(b.recipe.worldLayer));
 
   const drawable = [
     ...effects.map((entry) => ({ kind: "effect" as const, order: layerOrder(entry.recipe.worldLayer), entry })),
@@ -403,6 +464,17 @@ export const renderLabScene = (
     if (options.hitboxTruth) geometryOutline(context, frame, effect.x, effect.y);
   }
 
+  if (options.bindingTruth) {
+    const [socketX, socketY] = socketWorld;
+    context.fillStyle = "#0b0e13";
+    context.fillRect(socketX - 3, socketY - 1, 7, 3);
+    context.fillRect(socketX - 1, socketY - 3, 3, 7);
+    context.fillStyle =
+      bindingPreview.mainSocket === "castOrigin" ? "#e98cff" : "#5ff0ff";
+    context.fillRect(socketX - 3, socketY, 7, 1);
+    context.fillRect(socketX, socketY - 3, 1, 7);
+  }
+
   if (options.layerOrderMode) {
     context.fillStyle = "rgba(8, 9, 12, 0.82)";
     context.fillRect(7, 7, 124, 34);
@@ -449,6 +521,12 @@ export const renderLabScene = (
   canvas.dataset.actorIds = actors
     .map((entry) => entry.sourceActor)
     .join(",");
-
-  void ACTOR_COMBAT_BINDINGS;
+  canvas.dataset.bindingActorId = bindingPreview.actorId;
+  canvas.dataset.bindingFrame = String(bindingPreview.actorFrame);
+  canvas.dataset.bindingReleaseFrame = String(bindingPreview.releaseFrame);
+  canvas.dataset.bindingEvent = bindingPreview.event;
+  canvas.dataset.bindingSocket = `${bindingPreview.mainSocket}:${bindingPreview.socket.join(",")}`;
+  canvas.dataset.bindingSocketWorld = socketWorld.join(",");
+  canvas.dataset.bindingEffectId = bindingPreview.effectId;
+  canvas.dataset.bindingTruth = String(options.bindingTruth);
 };

@@ -5,7 +5,9 @@ import {
 } from "../fixtures/actor-pack/assets";
 import {
   loadSpriteForgeSheets,
+  SPRITE_FORGE_ACTORS,
   SPRITE_FORGE_CORPUS,
+  type SpriteForgeActorId,
   type SpriteForgeActorSet,
   type SpriteForgeSheetSet,
 } from "../fixtures/sprite-forge-full/assets";
@@ -15,6 +17,10 @@ import {
   TILEFORGE_REFERENCE_FIXTURES,
   type TileForgeReferenceImages,
 } from "../fixtures/tileforge-reference/assets";
+import {
+  resolveBindingPreview,
+  timeForBindingFrame,
+} from "../lab/bindingPreview";
 import { renderLabScene } from "../lab/scene";
 import type { BackgroundId } from "../model/types";
 import { downloadCanvas } from "../renderer/canvas";
@@ -27,14 +33,17 @@ export function CombatLab() {
   const [layerOrderMode, setLayerOrderMode] = useState(false);
   const [density, setDensity] = useState<"focus" | "slice" | "stress">("slice");
   const [time, setTime] = useState(0.5);
-  const [socket, setSocket] = useState<[number, number]>([19, 14]);
   const [actorSet, setActorSet] = useState<SpriteForgeActorSet>("skirmish");
+  const [bindingActorId, setBindingActorId] =
+    useState<SpriteForgeActorId>("cultist");
+  const [bindingTruth, setBindingTruth] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [actorSheets, setActorSheets] = useState<ActorSheetSet | null>(null);
   const [spriteForgeSheets, setSpriteForgeSheets] =
     useState<SpriteForgeSheetSet | null>(null);
   const [tileForgeReferences, setTileForgeReferences] =
     useState<TileForgeReferenceImages | null>(null);
+  const bindingPreview = resolveBindingPreview(bindingActorId, time);
 
   useEffect(() => {
     let active = true;
@@ -71,8 +80,9 @@ export function CombatLab() {
       layerOrderMode,
       density,
       time,
-      socket,
       actorSet,
+      bindingActorId,
+      bindingTruth,
       actorSheets: actorSheets ?? undefined,
       spriteForgeSheets: spriteForgeSheets ?? undefined,
       tileForgeReferences: tileForgeReferences ?? undefined,
@@ -81,11 +91,12 @@ export function CombatLab() {
     actorSet,
     actorSheets,
     background,
+    bindingActorId,
+    bindingTruth,
     density,
     grayscale,
     hitboxTruth,
     layerOrderMode,
-    socket,
     spriteForgeSheets,
     tileForgeReferences,
     time,
@@ -128,6 +139,12 @@ export function CombatLab() {
             >
               Layer order
             </button>
+            <button
+              className={bindingTruth ? "active cyan" : ""}
+              onClick={() => setBindingTruth((value) => !value)}
+            >
+              Binding truth
+            </button>
           </div>
         </div>
 
@@ -141,6 +158,10 @@ export function CombatLab() {
           />
           <div className="canvas-badges">
             <span>{TILEFORGE_REFERENCE_FIXTURES[background].label}</span>
+            <span>
+              {SPRITE_FORGE_ACTORS[bindingActorId].label} · F
+              {bindingPreview.actorFrame} · {bindingPreview.event}
+            </span>
             <span>320×180 · 1× truth</span>
           </div>
         </div>
@@ -150,8 +171,10 @@ export function CombatLab() {
             {playing ? "Pause" : "Play slice"}
           </button>
           <div className="timeline-copy">
-            <strong>Telegraph → active → contact</strong>
-            <small>deterministic time {time.toFixed(2)}</small>
+            <strong>Actor → prefire → release</strong>
+            <small>
+              deterministic time {time.toFixed(2)} · F{bindingPreview.actorFrame}
+            </small>
           </div>
           <input
             type="range"
@@ -243,39 +266,80 @@ export function CombatLab() {
           </small>
         </div>
 
-        <div className="control-group socket-editor">
+        <div className="control-group binding-preview-editor">
           <div className="label-row">
-            <label>Hostile cast · candidate socket</label>
-            <span>{spriteForgeSheets ? "full pack" : actorSheets ? "v2.3 fallback" : "loading"}</span>
+            <label htmlFor="binding-actor">Candidate binding preview</label>
+            <span>approval open</span>
           </div>
-          <p>Weapon-tip socket</p>
-          <div className="coordinate-inputs">
-            <label>
-              X
-              <input
-                type="number"
-                min={0}
-                max={31}
-                value={socket[0]}
-                onChange={(event) => setSocket([Number(event.target.value), socket[1]])}
-              />
-            </label>
-            <label>
-              Y
-              <input
-                type="number"
-                min={0}
-                max={31}
-                value={socket[1]}
-                onChange={(event) => setSocket([socket[0], Number(event.target.value)])}
-              />
-            </label>
+          <select
+            id="binding-actor"
+            value={bindingActorId}
+            onChange={(event) => {
+              const actorId = event.target.value as SpriteForgeActorId;
+              const next = resolveBindingPreview(actorId, 0);
+              setBindingActorId(actorId);
+              setDensity("focus");
+              setPlaying(false);
+              setTime(timeForBindingFrame(actorId, next.prefireFrame));
+            }}
+          >
+            {(Object.keys(SPRITE_FORGE_ACTORS) as SpriteForgeActorId[]).map(
+              (actorId) => (
+                <option value={actorId} key={actorId}>
+                  {SPRITE_FORGE_ACTORS[actorId].label}
+                </option>
+              ),
+            )}
+          </select>
+          <div
+            className={`binding-event-strip ${bindingPreview.hasReleased ? "release" : ""}`}
+          >
+            <span>Live event</span>
+            <strong>{bindingPreview.event}</strong>
+            <code>
+              {bindingPreview.mainSocket} [{bindingPreview.socket.join(", ")}]
+            </code>
+          </div>
+          <p>Jump to actor frame</p>
+          <div
+            className="segmented binding-frame-buttons"
+            style={{
+              gridTemplateColumns: `repeat(${bindingPreview.candidate.frameCount}, 1fr)`,
+            }}
+          >
+            {bindingPreview.candidate.frames.map((_, frame) => (
+              <button
+                className={bindingPreview.actorFrame === frame ? "active" : ""}
+                key={frame}
+                onClick={() => {
+                  setPlaying(false);
+                  setTime(timeForBindingFrame(bindingActorId, frame));
+                }}
+              >
+                F{frame}
+                {frame === bindingPreview.releaseFrame ? " · release" : ""}
+              </button>
+            ))}
           </div>
           <dl className="event-list">
-            <div><dt>prefire.begin</dt><dd>frame 1</dd></div>
-            <div><dt>attack.release</dt><dd>frame 2</dd></div>
-            <div><dt>foot pivot</dt><dd>16, 27</dd></div>
+            <div>
+              <dt>sequence</dt>
+              <dd>
+                {bindingPreview.candidate.sequence}-down · row{" "}
+                {bindingPreview.candidate.sourceRow}
+              </dd>
+            </div>
+            <div><dt>prefire.begin</dt><dd>F{bindingPreview.prefireFrame}</dd></div>
+            <div>
+              <dt>{bindingPreview.candidate.releaseEvent}</dt>
+              <dd>F{bindingPreview.releaseFrame}</dd>
+            </div>
+            <div><dt>release effect</dt><dd>{bindingPreview.effectId}</dd></div>
           </dl>
+          <small>
+            Read directly from the exported candidate companion binding. No
+            approval is recorded here.
+          </small>
         </div>
 
         <div className="truth-note">
@@ -283,7 +347,8 @@ export function CombatLab() {
           <p>
             Effects are composited over the supplied TileForge RD7 reference scenes.
             Telegraphs and cyan collision overlays still rasterize the same geometry
-            object.
+            object. The cyan or magenta cross is the selected candidate binding
+            anchor for the live actor frame.
           </p>
           <small>
             {TILEFORGE_REFERENCE_CORPUS.scenes} scenes · {TILEFORGE_REFERENCE_CORPUS.flagships} flagships · {TILEFORGE_REFERENCE_CORPUS.themes} themes

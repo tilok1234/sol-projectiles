@@ -22,6 +22,7 @@ Target: Gate EF-0 candidate plus the internal vertical slice.
 - [x] Supplied 231-actor Sprite Forge corpus imported read-only
 - [x] Six representative actor archetypes live in Combat Lab
 - [x] Six-actor interactive socket/release candidate board
+- [x] Candidate bindings drive Combat Lab prefire/release runtime preview
 - [x] Real TileForge RD7 reference-map fixture import
 - [ ] User-facing Sprite Forge ZIP importer
 - [x] Final hostile ramp approval: B — Vermilion Flare

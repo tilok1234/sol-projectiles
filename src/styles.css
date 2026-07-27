@@ -991,10 +991,73 @@ input[type="range"] {
   text-transform: uppercase;
 }
 
-.socket-editor p {
+.socket-editor p,
+.binding-preview-editor p {
   margin: 0 0 8px;
   color: var(--muted);
   font-size: 8px;
+}
+
+.binding-event-strip {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  margin: 10px 0 12px;
+  padding: 10px;
+  border: 1px solid #355f61;
+  border-radius: 4px;
+  background: rgba(26, 70, 68, 0.27);
+}
+
+.binding-event-strip.release {
+  border-color: #6f5730;
+  background: rgba(93, 67, 26, 0.24);
+}
+
+.binding-event-strip span {
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.binding-event-strip strong {
+  justify-self: end;
+  color: var(--teal);
+  font-family: "DM Mono", monospace;
+  font-size: 8px;
+}
+
+.binding-event-strip.release strong {
+  color: var(--amber);
+}
+
+.binding-event-strip code {
+  grid-column: 1 / -1;
+  color: #c0cad0;
+  font-size: 8px;
+}
+
+.binding-frame-buttons button {
+  font-size: 8px;
+  text-transform: none;
+}
+
+.binding-preview-editor .event-list dd {
+  max-width: 185px;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.binding-preview-editor > small {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted-2);
+  font-size: 8px;
+  line-height: 1.45;
 }
 
 .coordinate-inputs {
